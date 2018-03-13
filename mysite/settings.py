@@ -7,7 +7,7 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
-from passwords import MYSQL_PASSWORD, MYSQL_NAME, MYSQL_USER, EMAIL_SERVER, EMAIL_USER, EMAIL_PASSWORD, EMAIL_PORT, THE_SECRET, HOST_LIST, DJANGO_BASE
+from passwords import MYSQL_PASSWORD, MYSQL_NAME, MYSQL_USER, EMAIL_SERVER, EMAIL_USER, EMAIL_PASSWORD, EMAIL_PORT, THE_SECRET, HOST_LIST, DJANGO_BASE, DEBUG_STATUS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = THE_SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG_STATUS
 
 TEMPLATE_DEBUG = True
 
