@@ -1,0 +1,15 @@
+{% extends "app/basic_template.html" %}
+
+{% block content %}
+<p>Sorry, something went wrong.<br><br>Please enter your address and zip code to find your recycling day to try again:</p>
+<br>
+<form method="post" action="">{% csrf_token %}
+<table>
+{{form}}
+</table>
+<br>
+<input type="submit" value="Submit"/>
+</form>
+
+{% endblock %}
+

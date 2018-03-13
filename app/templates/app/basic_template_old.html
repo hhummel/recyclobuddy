@@ -1,0 +1,42 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="author" content="RecycloBuddy" />
+    <meta name="contact" content="recyclobuddy.com" />
+    <meta name="description" content="Recycling day alerts" />
+    <meta name="keywords" content="Recycling, Trash, Alerts, Text, Email, RecycloBuddy" />
+    <title="RecycloBuddy"></title>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</head>
+    
+<body>
+        <a href=index><img src="{{STATIC_URL}}images/{{logo_image}}" alt="Gorgeous Bread"></a>
+	{% block content %}
+	{% endblock %}
+	<br>
+<p><a href=index>Home</a> &nbsp &nbsp <a href=about>About</a> &nbsp &nbsp <a href=faq>FAQ</a> &nbsp &nbsp <a href=terms>Terms of Use</a> &nbsp &nbsp <a href=cancel>Cancel Service</a> &nbsp &nbsp <a href="mailto:recyclobuddy@recyclobuddy.com?Subject="Contact" target="_top">Contact</p>
+<table><tr><td>
+<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffacebook.com%2Frecyclobuddy&amp;width=200px&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height: 30px" allowTransparency="true"></iframe>
+</td>
+<td>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://recyclobuddy.com" data-text="Reminds you it's recycling and trash day." data-via="RecycloBuddy" data-related="RecycloBuddy" data-hashtags="RecycloBuddy" data-dnt="true">Tweet</a></p>
+</td></tr></table>
+
+</body>
+</html>
+

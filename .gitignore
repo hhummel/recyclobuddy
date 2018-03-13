@@ -1,0 +1,6 @@
+mysite/*.pyc
+mysite/passwords.py
+log
+app/*.pyc
+app/*/*.pyc
+app/old

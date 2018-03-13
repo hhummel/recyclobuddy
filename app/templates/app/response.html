@@ -1,0 +1,24 @@
+{% extends "app/basic_template.html" %}
+
+{% block content %}
+<p>{{message_1}}</p>
+<p class="hidden"><img src="{{STATIC_URL}}images/ajax-loader.gif" class="img-responsive center-block"></p>
+<p class="update">{{message_2}}</p>
+<div class="unhidden">
+  <p>{{message_3}}</p>
+  {% ifnotequal subscribe_URL "" %}
+	<p>Subscribe for free text or email reminders of your trash/recycling day <a href={{subscribe_URL}}>here</a>.</p>
+  {% endifnotequal %}
+  {% if form %}
+	<br>
+	<form method="post" action="">{% csrf_token %}
+	    <table>
+		{{form}}
+	    </table>
+	    <br>
+	    <input type="submit" value="Submit"/>
+	</form>
+  {% endif %}
+  </div>
+{% endblock %}
+

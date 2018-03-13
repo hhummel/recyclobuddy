@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link REL="SHORTCUT ICON" HREF="http://www.phila.gov/images/Favicon.ico"><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Phila.Gov | CityMaps Portal Page</title>
+
+<!-- this file includes all tools together with the jQuery library -->
+<!--
+<script src="http://cdn.jquerytools.org/1.0.2/jquery.tools.min.js"></script>
+-->
+
+<!--logo
+<script type="http://beta.phila.gov/philagov/newstandardsmayor/text/javascript" src="http://www.google.com/jsapi"></script>
+
+<script defer type="http://beta.phila.gov/philagov/newstandardsmayor/text/javascript" src="Scripts/slider.js"></script>
+<script type="http://beta.phila.gov/philagov/newstandardsmayor/text/javascript" src="scripts/blog.js"></script>
+-->
+
+
+<!-- tooltip styling -->
+<!--<link rel="stylesheet" type="text/css" href="CSS/jQueryToolTip.css"/>-->
+<link rel="stylesheet" type="text/css" href="CSS/portal.css"/>
+<link href="css/wireframe.css" rel="stylesheet" type="text/css" />
+<link href="css/skin.css" rel="stylesheet" type="text/css" />
+
+
+<!-- standalone page override -->
+<style type="text/css"> 
+div.tooltip {
+font-size:12px;		
+}
+</style>
+	
+	  
+      
+
+
+</head>
+
+<!--************************************************-->
+<!--
+<body onload="load()">
+  -->
+  <body>
+
+
+<!-- GLOBAL NAVIGATION AREA START -->
+<div class="globalNav">
+    <div class="content">
+    <div class="linkArea">
+    	<ul>
+            <li><a href="http://www.phila.gov" style="font-size:15px;">Phila.gov</a></li>
+            <li><a href="http://www.phila.gov/mayor/">Mayor</a></li>
+            <li><a href="http://www.phila.gov/citycouncil">City Council</a></li>
+
+            <li><a href="http://www.phila.gov/business/">Business</a></li>
+            <li><a href="http://www.phila.gov/residents">Residents</a></li>
+            <li><a href="http://www.phila.gov/leisure/">Leisure</a></li>
+            <li><a href="http://www.phila.gov/311">3-1-1</a></li>
+        </ul>
+    </div>
+    <div class="helpArea"></div>
+
+    <div class="clear"></div>
+    </div>
+</div>
+<!-- GLOBAL NAVIGATION AREA END -->
+
+
+<!-- MAIN SITE AREA START -->
+<div class="page">
+	<div class="header">
+    	<div class="logoArea"><img src="imgs/cityBranding.jpg" alt="Philadelphia City Branding Image" width="60" height="71" /></div>
+        <div class="deptName"><img src="imgs/LogoType.jpg" alt="Office of the Mayor - A New Day. A New Way." height="50" align="left" />
+        	<!-- <div><h3>The new and improved version of Citymaps can be found at <a href="http://www.phila.gov/map">www.Phila.gov/Map</a>.</h3></div>-->
+        </div>
+  
+        <div class="clear"></div>
+    </div>
+    
+    
+    
+    
+    <div class="content">
+
+<!-- ASP.NET FORM: don't mess... -->
+    <!-- citymaps stuff -->
+    <form name="form1" method="post" action="" id="form1">
+<input type="hidden" name="ScriptManager1_HiddenField" id="ScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE0Mzk4NzE3NDIPZBYEAgEPD2Q8KwAGAGQCAw9kFgICAw9kFgJmD2QWGgIBDw8WAh4LTmF2aWdhdGVVcmwFQ2h0dHA6Ly9jaXR5bWFwcy5waGlsYS5nb3YvbWFwL2RlZmF1bHQuYXNweD9hZGRyZXNzPTY5NDAgU0hFUldPT0QgUkRkZAIDDw8WAh8ABUtodHRwOi8vY2l0eW1hcHMucGhpbGEuZ292L3pvbmluZ292ZXJsYXkvaW5kZXguaHRtbD9hZGRyZXNzPTY5NDAgU0hFUldPT0QgUkRkZAIHDw8WAh8ABVNodHRwOi8vb2VtLnJlYWR5cGhpbGFkZWxwaGlhLm9yZy9kZWZhdWx0LmFzcHg/cmVsaWQ9NjA3NTQ1JmFkZHJlc3M9Njk0MCBTSEVSV09PRCBSRGRkAgkPDxYCHwAFRGh0dHA6Ly9jaXR5bWFwcy5waGlsYS5nb3YvQ3JpbWVNYXAvbWFwLmFzcHg/YWRkcmVzcz02OTQwIFNIRVJXT09EIFJEZGQCEQ8QZBAVARA2OTQwIFNIRVJXT09EIFJEFQEUNjk0MCBTSEVSV09PRCBSRHwwfDAUKwMBZxYBZmQCFQ8PFgIeBFRleHRlZGQCFw9kFgICAQ8WAh8BBf4EPGRpdiBjbGFzcz0ia2V5U2VjdEl0ZW0iPjxiPkFkZHJlc3M8L2I+OiA2OTQwIFNIRVJXT09EIFJEPGJyLz48L2Rpdj48ZGl2IGNsYXNzPSJrZXlTZWN0SXRlbSI+PGI+WmlwICs0OjwvYj4gMTkxNTEyMzIzPC9kaXY+PGRpdiBjbGFzcz0ia2V5U2VjdEl0ZW0iPjxiPkNvdW5jaWwgRGlzdHJpY3Q6IDwvYj4gNDwvZGl2PjxkaXYgY2xhc3M9ImtleVNlY3RJdGVtIj48Yj5UcmFzaCBQaWNrdXAgRGF5OiA8L2I+IE1PTjwvZGl2PjxkaXYgY2xhc3M9ImtleVNlY3RJdGVtIj48Yj5Qb2xpY2UgRGlzdHJpY3Q6IDwvYj4gMTk8L2Rpdj48ZGl2IGNsYXNzPSJrZXlTZWN0SXRlbSI+PGI+V2FyZDogPC9iPiAzNDwvZGl2PjxkaXYgY2xhc3M9ImtleVNlY3RJdGVtIj48ZGl2Pjx0YWJsZSBjbGFzcz0ia2V5VGFibGVSZWd1bGFyIj48dHI+PHRkPjxiPkNpdHkgRGVwYXJ0bWVudDwvYj48L3RkPjx0ZD48Yj5BZGRyZXNzIFJlZmVyZW5jZTwvYj48L3RkPjwvdHI+PHRyPjx0ZD5MaWNlbnNlcyAmSW5zcGVjdGlvbnMgPC90ZD48dGQ+MDY5NDAgICAgU0hFUldPT0QgUkQ8L3RkPjwvdHI+PHRyPjx0ZD5Cb2FyZCBvZiBSZXZpc2lvbiBvZiBUYXhlczwvdGQ+PHRkPjY5NDAgU0hFUldPT0QgUkQ8L3RkPjwvdHI+PC90YWJsZT48L2Rpdj48L2Rpdj5kAhsPFgIfAQWpAzxpbWcgc3JjPSJodHRwOi8vbWFwcy1zdGFnaW5nLnBoaWxhLmdvdi9ET1RfSW1hZ2VIYW5kbGVyL0ltYWdlSGFuZGxlci5hc2h4P3NlcnZpY2VuYW1lPVBoaWxseUJhc2VNYXAmd2lkdGg9MzAwJmhlaWdodD0yMzUmeG1pbj0yNjY1ODMzJnhtYXg9MjY2NjQzMyZ5bWluPTI0NTc4NCZ5bWF4PTI0NjM4NCZpbWFnZXR5cGU9cG5nJmxhYmVscz1be3RleHQ6JTIyNjk0MCtTSEVSV09PRCtSRCUyMix4OjI2NjYxMzMseToyNDYxNjQsZm9udHNpemU6JTIyMTIlMjIsY29sb3I6JTIyJTIzMDQwNEI0JTIyfV0mZ2VvbWV0cmllcz1be2dlb206JTIyUE9MWUdPTigoMjY2NjEzMyAyNDYxMDQsMjY2NjE1MyAyNDYwODQsMjY2NjEzMyAyNDYwNjQsMjY2NjExMyAyNDYwODQsMjY2NjEzMyAyNDYxMDQpKSUyMixmaWxsY29sb3I6JTIyJTIzRkY4MDAwJTIyfV0iIC8+ZAIlDw8WAh4HVmlzaWJsZWdkZAIpDw8WAh8CZ2QWAgIDDxYCHwEFggE8YnIgLz48YnIgLz48Yj5DbGljayBvbiBvbmUgb2YgdGhlIGxpbmtzIHRvIHlvdXIgcmlnaHQgdG8gc2VlIGRldGFpbGVkIGluZm9ybWF0aW9uIGZvciBhIHBhcnRpY3VsYXIgdG9waWMgYWJvdXQgeW91ciBsb2NhdGlvbi48L2I+ZAIrDw8WAh8CaGQWAgIDDzwrABEAZAItDw8WAh8CZ2RkAi8PDxYCHwJnZBYCAgEPDxYCHwJnZBYMAgEPZBYEZg8PFgQeCENzc0NsYXNzBQ9hY2NvcmRpb25IZWFkZXIeBF8hU0ICAmRkAgEPDxYEHwMFEGFjY29yZGlvbkNvbnRlbnQfBAICFgIeBXN0eWxlBQ5kaXNwbGF5OmJsb2NrO2QCAg9kFgRmDw8WBB8DBQ9hY2NvcmRpb25IZWFkZXIfBAICZGQCAQ8PFgQfAwUQYWNjb3JkaW9uQ29udGVudB8EAgIWAh8FBQ1kaXNwbGF5Om5vbmU7ZAIDD2QWBGYPDxYEHwMFD2FjY29yZGlvbkhlYWRlch8EAgJkZAIBDw8WBB8DBRBhY2NvcmRpb25Db250ZW50HwQCAhYCHwUFDWRpc3BsYXk6bm9uZTtkAgQPZBYEZg8PFgQfAwUPYWNjb3JkaW9uSGVhZGVyHwQCAmRkAgEPDxYEHwMFEGFjY29yZGlvbkNvbnRlbnQfBAICFgIfBQUNZGlzcGxheTpub25lO2QCBQ9kFgRmDw8WBB8DBQ9hY2NvcmRpb25IZWFkZXIfBAICZGQCAQ8PFgQfAwUQYWNjb3JkaW9uQ29udGVudB8EAgIWAh8FBQ1kaXNwbGF5Om5vbmU7ZAIGD2QWBGYPDxYEHwMFD2FjY29yZGlvbkhlYWRlch8EAgJkZAIBDw8WBB8DBRBhY2NvcmRpb25Db250ZW50HwQCAhYCHwUFDWRpc3BsYXk6bm9uZTtkGAEFEmdyZE92ZXJ2aWV3T3B0aW9ucw9nZFxJpd+ytRoi8EaeaaQ07T9btOmAyq5gFEU/NKgMxtU2" />
+
+
+<script src="/portal/ScriptResource.axd?d=yiocFNydzM6Rl5z3gpHygX2B2q7F4SkxViaMfrEqYhC5kWckAuqYhsBNhaPkTTo2-7q1pC7yvPs6wTNzMG2fnkn0Vc4P507ZTRlwR4usG9xBqHwM8o4NsOAFwZoKkc762_eMyTHXECdpTzA1MXgAVQ2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="/portal/Default.aspx?_TSM_HiddenField_=ScriptManager1_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d4.1.40412.0%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3aacfc7575-cdee-46af-964f-5d85d9cdcf92%3ade1feab2%3af2c8e708%3a720a52bf%3af9cec9bc%3a589eaa30%3a698129cf%3a7a92f56c%3a7311d143" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="1925773B" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWHwKEue71BQLB4K39DgL+3azVCgK13srYCQKHooXzDwLhwdG0BQLgm9q8CwKV1ef/AgLDooQ6Aoup74MHAuK4/I0OAv72ne4OAoyy9MULAoesqcsLAs2xuDoC86GxngICloqNjwECgZPh8AYC/ofvvwUC5M65iwcC5LrX+ggCwd3c6A4C68iCowICppeG1Q4CzdDPrgQCkePUYAKSx9bxDgLClqqDBQLXv6aYAwK494/2AQKrm/L0C0i9qgwb2xTpg3dpr8eHldLKFSHB//8ckPAAUQYnZYd4" />     
+
+       
+        
+        <!--update panel container-->
+        <!--<div id="updatePanelContainer">-->
+            <!-- script manager -->
+           
+    
+            
+             <!--<div id="mapDiv" class="tundra" style="width:600px; height:400px; border:1px solid #000;"></div>-->
+            
+            <!-- update panel -->
+            <div id="updatePnl">
+	
+                    <fieldset>
+                    <!-- MENU AREA START -->
+    <div class="menu">
+      <ul>
+        <li>
+            <a id="cityMapsLink" href="http://citymaps.phila.gov/map/default.aspx?address=6940 SHERWOOD RD" target="_new">City Facility & Service Area Maps</a>
+        </li>
+          
+          
+          <li><a id="zoningLink" href="http://citymaps.phila.gov/zoningoverlay/index.html?address=6940 SHERWOOD RD" target="_new">Zoning</a></li>
+
+          <li>
+              <a id="parcelViewerLink" href="https://secure.phila.gov/parcelexplorerauth/Login.aspx" target="_new">Parcel Viewer</a></li>           
+          
+          <li>
+              <a id="evacuationRoutesLink" href="http://oem.readyphiladelphia.org/default.aspx?relid=607545&amp;address=6940 SHERWOOD RD" target="_new">Evacuation Routes</a></li>    
+          
+          
+          <li>
+              <a id="crimeMapsLink" href="http://citymaps.phila.gov/CrimeMap/map.aspx?address=6940 SHERWOOD RD" target="_new">Crime Maps</a></li>    
+       	  	
+       
+      </ul>
+      <div class="clear"></div>
+    </div>
+    <!-- MENU AREA END -->
+                    
+            <!-- auto complete extender -->
+            
+                        
+
+                        
+
+
+
+        <!-- FEATURE AREA START -->
+    	<div class="top">
+                    
+            <!-- TOP STORY AREA START -->
+        	<div class="story" style="width:600px; overflow:hidden;">
+                        <div class="search">
+                            <!-- search section -->
+                            <div id="searchContainer">
+                            
+                                <!--address search container -->
+                                <div id="addressSearchContainer">
+                                    <br />
+                                    <input name="txtSearchAddress" type="text" value="6940 SHERWOOD RD" id="txtSearchAddress" autocomplete="off" />
+                                    <input type="submit" name="bttnSearchAddress" value="Search Address" id="bttnSearchAddress" />
+                                 </div>
+                               
+                                <!--address select container --> 
+                                 <div id="addressSelectContainer">
+                                    
+                                    
+                                 </div>
+                                 
+                                 <!--address feedback message -->
+                                 <div>
+                                        
+                                        
+                                    <span id="lblAddressSearchMessage"></span>
+                                 </div>
+                                    
+                            </div>
+                        </div>
+                            <div class="keyInfo">
+                            <!-- key information section -->
+                                <div id="keyInfoContainer">
+                                    <div id="pnlKeyInfo">
+		
+                                        <div class="keySectItem"><b>Address</b>: 6940 SHERWOOD RD<br/></div><div class="keySectItem"><b>Zip +4:</b> 191512323</div><div class="keySectItem"><b>Council District: </b> 4</div><div class="keySectItem"><b>Trash Pickup Day: </b> MON</div><div class="keySectItem"><b>Police District: </b> 19</div><div class="keySectItem"><b>Ward: </b> 34</div><div class="keySectItem"><div><table class="keyTableRegular"><tr><td><b>City Department</b></td><td><b>Address Reference</b></td></tr><tr><td>Licenses &Inspections </td><td>06940    SHERWOOD RD</td></tr><tr><td>Board of Revision of Taxes</td><td>6940 SHERWOOD RD</td></tr></table></div></div>
+                                        
+                                          <div class="clear"></div>
+                                        
+                                    
+	</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                         <div class="siteImage">
+                        <!--map thumbnail section-->
+                        
+                            <div id="thumbnailContainer">
+                               <!--
+                                <img id="imgMapThumb" src="" border="0" />
+                                -->
+                              
+                                <img src="http://maps-staging.phila.gov/DOT_ImageHandler/ImageHandler.ashx?servicename=PhillyBaseMap&width=300&height=235&xmin=2665833&xmax=2666433&ymin=245784&ymax=246384&imagetype=png&labels=[{text:%226940+SHERWOOD+RD%22,x:2666133,y:246164,fontsize:%2212%22,color:%22%230404B4%22}]&geometries=[{geom:%22POLYGON((2666133 246104,2666153 246084,2666133 246064,2666113 246084,2666133 246104))%22,fillcolor:%22%23FF8000%22}]" />
+                              
+                                
+                            </div>
+                         
+                            
+                            <!--
+                            <input type="submit" name="bttnHiddenMap" value="Button" id="bttnHiddenMap" />                       
+                            <input name="txtHiddenCommandsToServer" type="text" id="txtHiddenCommandsToServer" />
+                            <input name="txtHiddenReturnFromServer" type="text" id="txtHiddenReturnFromServer" />
+                              -->
+                            
+                           <!-- <input name="txtChangySomething" type="text" id="txtChangySomething" />-->
+                         
+                            
+                        </div>
+        </div> 
+                        
+                    
+                    <div class="clear"></div>
+                    
+                 <div class="middle" style="padding-right:0px;">
+                    <div class="widget news twoColumn" style="margin-right:10px;">
+                    
+                        <div id="pnlAddresdInfoDetails">
+		
+                               <div class="heading">    
+                                    <div class="title">&nbsp;Address Information Details</div> 
+                                </div>
+                           
+	</div>
+
+                             <!-- information detail container -->
+                            <div id="infoContainer">
+                            
+                                <!-- update progress icon -->
+                                <div id="updateProgressContainer">
+                                    <div id="UpdateProgress1" style="display:none;">
+		
+                                            <img border="0" src="imgs/remembermilk_orange.gif" />
+                                        
+	</div>
+                                </div>
+                                
+                                <div id="pnlInfo">
+		
+                                    
+                                    <br /><br /><b>Click on one of the links to your right to see detailed information for a particular topic about your location.</b>
+                                
+	</div>
+                            </div>
+                            
+                            
+                            <!--overview container -->
+                            <div id="overviewContainer">
+                                
+                            </div>
+ 
+ 
+                        </div> 
+                        
+                                <!--<div class="widget news center" style="margin:0px; height:400px">-->
+                                <div class="widget news center" style="margin:0px; height:auto">
+                       
+<div id="pnlAddressInfoMenu">
+		          
+                <div class="heading">
+                    <!--<div class="icon"><img src="#" width="33" height="33" align="left" /></div>-->
+                    <div class="title">&nbsp;Address Information Menu</div>
+              </div>
+
+	</div>
+                  
+                    <!--<div class="body" id="news" style="margin:0px; height:400px">-->
+                    <div class="body" id="news" style="margin:0px; height:auto">
+                                            
+
+ 
+ 
+                    
+                      
+ <div id="pnlAccHolder">
+		
+                                <div id="accSelection">
+			<input type="hidden" name="accSelection_AccordionExtender_ClientState" id="accSelection_AccordionExtender_ClientState" value="0" /><div id="pnCityServices_header" class="accordionHeader">
+				City Services
+			</div><div id="pnCityServices_content" class="accordionContent" style="display:block;">
+				
+                                                
+                                                 <input type="submit" name="pnCityServices_content$bttnFacilities" value="Libraries" id="pnCityServices_content_bttnFacilities" class="button" />
+                                                 <input type="submit" name="pnCityServices_content$bttnTrash" value="Sanitation, Recycling, Leaf, &amp; Block Information" id="pnCityServices_content_bttnTrash" class="button" />
+                                                 <input type="submit" name="pnCityServices_content$bttnPolice" value="Police &amp; Public Safety" id="pnCityServices_content_bttnPolice" class="button" />
+                                                 <input type="submit" name="pnCityServices_content$bttnHealth" value="Health Services" id="pnCityServices_content_bttnHealth" class="button" />
+                                              
+                                               
+                                               
+                                            
+			</div><div id="AccordionPane2_header" class="accordionHeader">
+				Schools
+			</div><div id="AccordionPane2_content" class="accordionContent" style="display:none;">
+				
+                                            
+                                                 <input type="submit" name="AccordionPane2_content$bttnEducation" value="School Catchment Areas" id="AccordionPane2_content_bttnEducation" class="button" />
+                                                 <input type="submit" name="AccordionPane2_content$bttnPubSchools" value="Public Schools" id="AccordionPane2_content_bttnPubSchools" class="button" />
+                                                 <input type="submit" name="AccordionPane2_content$bttnPrivateSchools" value="Private Schools" id="AccordionPane2_content_bttnPrivateSchools" class="button" />
+                                                  <input type="submit" name="AccordionPane2_content$bttnCharter" value="Charter Schools" id="AccordionPane2_content_bttnCharter" class="button" />
+                                                  <input type="submit" name="AccordionPane2_content$bttnParochial" value="Parochial Schools" id="AccordionPane2_content_bttnParochial" class="button" />
+                                        
+                                              
+			</div><div id="AccordionPane1_header" class="accordionHeader">
+				Recreation
+			</div><div id="AccordionPane1_content" class="accordionContent" style="display:none;">
+				
+                                                    
+                                                  <input type="submit" name="AccordionPane1_content$bttnBaseball" value="Baseball Fields" id="AccordionPane1_content_bttnBaseball" class="button" />
+                                                  <input type="submit" name="AccordionPane1_content$bttnBasketball" value="Basketball Courts" id="AccordionPane1_content_bttnBasketball" class="button" />
+                                                  <input type="submit" name="AccordionPane1_content$bttnPlaygrounds" value="Playgrounds" id="AccordionPane1_content_bttnPlaygrounds" class="button" />
+                                                  <input type="submit" name="AccordionPane1_content$bttnGolf" value="Golf Courses" id="AccordionPane1_content_bttnGolf" class="button" />
+           
+                                                 
+                                                    
+                                            
+			</div><div id="pnPlanning_header" class="accordionHeader">
+				City Planning &amp; Development
+			</div><div id="pnPlanning_content" class="accordionContent" style="display:none;">
+				
+					                                          	<!-- <input type="submit" name="pnPlanning_content$bttnZoningCode" value="Zoning Code" id="pnPlanning_content_bttnZoningCode" class="button" />-->
+										        <input type="submit" name="pnPlanning_content$bttnPolitical" value="City Planning &amp; Political Boundaries" id="pnPlanning_content_bttnPolitical" class="button" />
+											<input type="submit" name="pnPlanning_content$bttnEconZone" value="Keystone Economic Zones &amp; Incentive Areas" id="pnPlanning_content_bttnEconZone" class="button" />
+					                                        
+					                                          
+			</div><div id="pnPropInfo_header" class="accordionHeader">
+				Property Information
+			</div><div id="pnPropInfo_content" class="accordionContent" style="display:none;">
+				
+                                        
+                                                <input type="submit" name="pnPropInfo_content$bttnGeneralInfo" value="Ownership, Contact" id="pnPropInfo_content_bttnGeneralInfo" class="button" />
+                                                <input type="submit" name="pnPropInfo_content$bttnRevenue" value="Tax Balance" id="pnPropInfo_content_bttnRevenue" class="button" />
+                                                <input type="submit" name="pnPropInfo_content$bttnRecords" value="Property Deeds, Recording" id="pnPropInfo_content_bttnRecords" class="button" />
+                                                <!--<input type="submit" name="pnPropInfo_content$bttnWater" value="Water Revenue" id="pnPropInfo_content_bttnWater" class="button" />-->
+                                                <input type="submit" name="pnPropInfo_content$bttnZoningArchive" value="Zoning Archive" id="pnPropInfo_content_bttnZoningArchive" class="button" />                                           
+                                               
+                                            
+			</div><div id="pnMapLinks_header" class="accordionHeader">
+				Links to Maps &amp; Data
+			</div><div id="pnMapLinks_content" class="accordionContent" style="display:none;">
+				
+                                             
+                                                <input type="submit" name="pnMapLinks_content$bttnCityLinks" value="City Links" id="pnMapLinks_content_bttnCityLinks" class="button" />
+                                                <input type="submit" name="pnMapLinks_content$bttnExternalLinks" value="Other Mapping Sites" id="pnMapLinks_content_bttnExternalLinks" class="button" />
+                               
+                                            
+			</div>
+		</div>
+                               
+	</div>
+                      
+                    
+                    
+                    
+                    
+                    </div><!--body-->
+
+                     </div>
+                     
+                         
+                       
+                        
+                        </fieldset>     
+                    
+</div>
+            
+           
+ <!--</div> no update panel container -->
+                
+     
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("ScriptManager1_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.AutoCompleteBehavior, {"completionInterval":400,"completionSetCount":20,"delimiterCharacters":"","id":"AutoCompleteExtender1","serviceMethod":"AutoCompleteAddress","servicePath":"AutoComplete.asmx"}, null, null, $get("txtSearchAddress"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.AccordionBehavior, {"ClientStateFieldID":"accSelection_AccordionExtender_ClientState","FadeTransitions":true,"HeaderCssClass":"accordionHeader","id":"accSelection_AccordionExtender"}, null, null, $get("accSelection"));
+});
+//]]>
+</script>
+</form>
+<!-- end ASP.NET FORM: don't mess... -->
+
+       
+</div>
+
+        <!-- PREFOOTER AREA START -->
+        <div class="bottom" style="height:150px;">
+            
+            <!-- LIST WIDGET START -->
+       	  <div class="widget linklist">
+           	<div class="heading" >
+                <div class="title">GIS Data</div>
+                </div>
+              <div class="body">
+              <ul>
+              <li><a href="http://www.usgs.gov/">USGS: United States Geological Survey</a></li>
+              <li class="alt"><a href="http://www.pasda.psu.edu/uci/">PASDA: Pennsylvania Spatial Data Access</a></li>
+              <li><a href="http://www.dvrpc.org/">DVRPC: Delaware Valley Regional Planning Commission</a></li>
+              </ul>
+              </div>
+          </div>
+            <!-- LIST WIDGET END -->
+            
+            <!-- LIST WIDGET START -->
+       	  <div class="widget linklist center" style="margin-top: 0px;">
+           	<div class="heading" >
+                <div class="title">Online Philadelphia Maps</div>
+                </div>
+              <div class="body">
+              <ul>
+              <li><A HREF="http://www.phillyhistory.org/PhotoArchive/" target="_new">Philly History</A></li>
+              <li><A HREF="http://www.muralfarm.org/MuralFarm/" target="_new">MuralFarm</A></li>
+              </ul>
+              </div>
+          </div>
+            <!-- LIST WIDGET END -->
+            
+            
+                        
+            <!-- LIST WIDGET START -->
+        	<div class="widget linklist" style="width:100px;">
+            	<div class="heading">
+                    <div class="title">Other Mapping Sites</div>
+                </div>
+                <div class="body">
+                	<ul>
+                        <li><A HREF="http://www.openstreetmap.org/" target="_new">Open Street Map</A></li>
+                        <li class="alt"><A HREF="http://maps.yahoo.com/" target="_new">Yahoo! Maps</A></li>
+                        <li><A HREF="http://maps.google.com/" target="_new">GoogleMaps</A></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- LIST WIDGET END -->
+        
+        
+            <div class="clear" />
+        
+        </div>
+        <!-- PREFOOTER AREA END -->
+
+
+<div class="clear" />
+
+
+    <!--<div class="clear" />-->
+    <div class="footer">
+        <img src="imgs/bottomSealImage.png" align="left" style="margin:0px 8px 0px 12px;" />
+        <div class="footerContent">
+        <span style="font-size:11px;"><strong>© 2009 City of Philadelphia :: Technical problems: webissues@phila.gov  | <a href="http://www.phila.gov/privacy/index.html" target="_new">HIPAA privacy policy</a> | <a href="http://www.phila.gov/privacy/pdfs/FinalCityOpenRecords.pdf" target="_new">Right To Know Policy</a>|| <a href="http://www.phila.gov/tos/index.html" target="_blank">Terms of Use</a></div>
+    </div>
+
+
+
+<!-- TOOLTIP START -->
+<!--
+<script>
+    // execute your scripts when the DOM is ready. this is a good habit
+    $(function() {
+        $(".tipTrigger").tooltip(
+{
+    position: ['top', 'left'],
+    offset: [20, 225]
+}
+);
+    });
+</script>
+-->
+<!-- TOOLTIP END -->
+
+<!-- SLIDER -->
+<!--
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#slider").easySlider({
+            auto: true,
+            continuous: true
+        });
+    });	
+
+</script>
+    -->
+
+<!-- BLOG IMPORT -->
+<!--
+<script type="text/javascript">
+
+    google.load("feeds", "1");
+
+    function initialize() {
+        var blog = new BlogPreview(document.getElementById("news"));
+        blog.show('http://cityofphiladelphia.wordpress.com/feed');
+        //      blog.show('http://ppd.jivesoftware.com/community/feeds/tags/budget?community=2053');
+        //       blog.show('http://ppd.jivesoftware.com/community/feeds/threads?community=2055');
+        return false;
+    }
+    google.setOnLoadCallback(initialize);
+
+    function setNews(year, month) {
+        var baseUrl = 'http://cityofphiladelphia.wordpress.com/';
+        var fullUrl = baseUrl + year + '/' + month + '/feed';
+
+        var blog = new BlogPreview(document.getElementById("news"));
+        blog.show(fullUrl);
+    }
+    </script>
+-->
+
+<!-- Google Analytics Tracking Code -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31525590-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+
+
+Failed to find address and matching zip code in Philadelphia
