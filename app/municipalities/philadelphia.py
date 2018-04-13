@@ -14,61 +14,31 @@ import schedule_helpers
 
 #Find Philadelphia day information
 def get_trash_zone(address, zip):
-
-
-    #Make cookie jar.  See wwwsearch.sourceforge.dat/mechanize/hints.html
-    cj=mechanize.LWPCookieJar()
-    opener=mechanize.build_opener(mechanize.HTTPCookieProcessor(cj))
-    mechanize.install_opener(opener)
+    '''Get trash zone/day number from city api'''
+    import json, urllib
 
     #Create a browser
     browser=mechanize.Browser()
 
-    #Save cookies
-    cj.save("/usr/local/django/recyclocity/recyclocity_static/cookies/cookie_jar", ignore_discard=True, ignore_expires=True)
+    #New Philadelphia API
+    frags = {'first': 'https://api.phila.gov/ais/v1/addresses/',
+        'last': '?gatekeeperKey=12070257c23a728f3c09f1d0d6c7d53b'}
 
-    #Fill in form
-    #browser.open('http://citymaps.phila.gov/portal/')
-    #browser.select_form(name="form1")
-    #browser.form['txtSearchAddress'] = address
+    url = frags['first'] + urllib.quote(address) + frags['last']
 
-    #Fill in form
-    browser.open('https://alpha.phila.gov/property/')
-    browser.form = list(browser.forms())[0]
-    browser.form['a'] = address
+    r = browser.open(url)
+    json_data = json.loads(r.read())
 
-    #Submit form
-    browser.submit()
-
-    #Extract content
-    content = browser.response().read()
-
-    print content
-
-    #Use pattern match to extract trash day
-    m=re.search('<div data-hook="rubbish-day" class="xtra-lg no-margin">([A-Z]+)', content)
-
-    print m
-
-    if m:
-	day,=m.groups()
+    #Check for a result, convert to day number.  Return nothing if there's an error
+    if str(zip).strip() ==json_data['features'][0]['properties']['zip_code']:
+        day = json_data['features'][0]['properties']['rubbish_recycle_day']
 	day_number = schedule_helpers.get_day_number(day)
     else:
-	return
-    
-    #Use pattern match to extract zip
-    #m=re.search('<b>Zip \+4:</b> (\d{5})-', content)
-    m=re.search('<b>Zip \+4:</b> (\d{5})', content)
+        return
 
-    if m:
-	match_zip,=m.groups()
+    #Check that zip code matches that in query, to ensure the municipality is correct
+    if str(zip).strip() ==json_data['features'][0]['properties']['zip_code']:
+        return day_number, day_number
     else:
-	return
-
-    #Verify that the zip returned from citymaps matches expected value.  Philadelphia only uses days, so return day_number for zone.
-    if int(match_zip)==int(zip):
-	return day_number, day_number
-    else:
-     	return
-   
+        return
 
