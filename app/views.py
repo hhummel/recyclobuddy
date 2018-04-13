@@ -18,6 +18,7 @@ from .forms import ContactForm, LookupForm, CancelForm
 from .recycle import parse_address, confirm_subscription, cancel_subscription, get_initial_message, insert_contact, get_zones, insert_initial_message, select_initial_message
 
 #Hash value for obfuscating primary key.  stackoverflow.com/questions/10559935/django-how-do-i-hash-a-url-from-the-database-objects-primary-key
+from mysite.passwords import OBFUSCATE
 obfuscate = 0xBACADCE0
 
 #Logo image
@@ -72,7 +73,7 @@ def index(request):
 			insert_initial_message(primary_key, messages)
 
 	    		#Obfuscate the primary key
-	    		masked_key = primary_key ^ obfuscate
+	    		masked_key = primary_key ^ OBFUSCATE
 
 			#Create URL for subscription with primary key
 			subscribe_URL="subscribe_" + str(masked_key)
@@ -122,7 +123,7 @@ def index(request):
 #@login_required
 def subscribe(request, masked_key):
     #undo obfuscation
-    primary_key = int(masked_key) ^ obfuscate
+    primary_key = int(masked_key) ^ OBFUSCATE
 
     cat = get_object_or_404(Contacts, index_key=primary_key)
 
@@ -197,7 +198,7 @@ def subscribe(request, masked_key):
 #@login_required
 def confirm(request, masked_key):
     #undo obfuscation
-    primary_key = int(masked_key) ^ obfuscate
+    primary_key = int(masked_key) ^ OBFUSCATE
 
     #Check if there is a valid object for this primary key
     cat = get_object_or_404(Contacts, index_key=primary_key)
