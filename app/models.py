@@ -98,6 +98,7 @@ CARRIER_CHOICES = (
     ('USC', 'US Cellular'),
     ('VRG', 'Virgin Mobile'),
     ('GOO', 'Google Voice'),
+    ('CRK', 'Cricket Wireless'),
 )
 
 ALERT_CHOICES = (
