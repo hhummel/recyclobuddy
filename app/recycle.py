@@ -106,6 +106,19 @@ def get_database_dictionary():
     cur=db.cursor(MySQLdb.cursors.DictCursor)
     return cur
 
+#Set up database connection with dictionary cursor
+def get_database_connections():
+    #Set up import of information from mysite package in parallel directory
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from mysite.passwords import MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
+
+    db = MySQLdb.connect(host="localhost", db=MYSQL_NAME, user=MYSQL_USER, passwd=MYSQL_PASSWORD)
+    cur = db.cursor()
+    dict_cur=db.cursor(MySQLdb.cursors.DictCursor)
+    return cur, dict_cur, db
+
 #Read out holidays from database
 def get_holidays(municipality, start_date, stop_date, cur):
 
@@ -365,6 +378,8 @@ def make_sms_address(carrier, mobile):
 	return mobile+"@vmobl.com"
    elif carrier=="GOO":
 	return mobile+"@msg.fi.google.com"
+   elif carrier=="CRK":
+	return "1" + mobile + "@mms.cricketwireless.net"
    else:
 	return
 
