@@ -280,7 +280,7 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
 
 #Compoase opt-out
 def opt_out():
-    return " Opt out: RecycloBuddy.com/cancel"
+    return " Cancel: RecycloBuddy.com/cancel"
 
 #Compose sponsor message
 def compose_sponsor(email, mobile, dict_cur):
