@@ -296,7 +296,7 @@ def compose_sponsor(email, mobile, dict_cur):
 
     opt_out = opt_out()
 
-    return sponsor_message + opt out
+    return sponsor_message + opt_out
 
 #Compose special message
 def compose_special(email, mobile, dict_cur):
