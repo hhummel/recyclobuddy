@@ -7,7 +7,6 @@ from address import AddressParser, address
 import municipalities.lower_merion
 import municipalities.philadelphia
 
-OPT_OUT = " To cancel: RecycloBuddy.com/cancel"
 
 ########################################################################################################################################################################
 #  Subroutines independent of municipality
@@ -282,6 +281,12 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
 
 #Compose sponsor message
 def compose_sponsor(email, mobile, dict_cur):
+    #Set up import of information from mysite package in parallel directory
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from mysite.passwords import OPT_OUT
+
     #Check for sponsor message for this email, mobile and date
     dict_cur.execute('select sponsor_message from sponsors where email=%s and mobile=%s and date<=curdate() and curdate()<date_add(date, interval 7 day)', (email, mobile)) 
     
