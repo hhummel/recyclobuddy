@@ -19,7 +19,6 @@ from .recycle import parse_address, confirm_subscription, cancel_subscription, g
 
 #Hash value for obfuscating primary key.  stackoverflow.com/questions/10559935/django-how-do-i-hash-a-url-from-the-database-objects-primary-key
 from mysite.passwords import OBFUSCATE
-obfuscate = 0xBACADCE0
 
 #Logo image
 logo_image="recyclobuddy_logo.jpg"

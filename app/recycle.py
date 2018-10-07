@@ -7,7 +7,7 @@ from address import AddressParser, address
 import municipalities.lower_merion
 import municipalities.philadelphia
 
-from mysite.passwords import OPT_OUT
+#from mysite.passwords import OPT_OUT
 ########################################################################################################################################################################
 #  Subroutines independent of municipality
 ########################################################################################################################################################################
@@ -291,7 +291,7 @@ def compose_sponsor(email, mobile, dict_cur):
     else:
 	sponsor_message=""
 
-    return sponsor_message + OPT_OUT
+    return sponsor_message + " To cancel: RecycloBuddy.com/cancel"
 
 #Compose special message
 def compose_special(email, mobile, dict_cur):
