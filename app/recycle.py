@@ -7,7 +7,8 @@ from address import AddressParser, address
 import municipalities.lower_merion
 import municipalities.philadelphia
 
-from .mysite.passwords import OPT_OUT
+OPT_OUT = " To cancel: RecycloBuddy.com/cancel"
+
 ########################################################################################################################################################################
 #  Subroutines independent of municipality
 ########################################################################################################################################################################
