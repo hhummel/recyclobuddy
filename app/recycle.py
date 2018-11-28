@@ -159,11 +159,30 @@ def holiday_week(date, holidays):
 
     return holiday_day_of_week
 
+#Make a url key from primary key and permutation key
+def convert(n):
+    #Set up import of information from mysite package in parallel directory
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from mysite.passwords import PERM_KEY
+
+    l = len(PERM_KEY)
+    if n < 0 or l < 2:
+        return ''
+    if n < l:
+        return PERM_KEY[n]
+    values = []
+    while n > 0:
+        res = n % l
+        values.append(PERM_KEY[res])
+        n = (n - res) // l
+    return ''.join(values[::-1])
 
 #Refresh subscriber database.  Requires dictionary cursor.
 def refresh_subscriber(dict_cur):
     #Query contacts table for subscribers
-    dict_cur.execute('''select prefix, first_name, middle_name, last_name, suffix, address, address2, city, state, zip, municipality, a.email, a.mobile, carrier, 
+    dict_cur.execute('''select index_key, prefix, first_name, middle_name, last_name, suffix, address, address2, city, state, zip, municipality, a.email, a.mobile, carrier, 
 		recycle_zone, trash_zone, yard_zone, recycle_day, trash_day, yard_day, alert_time, alert_day, email_alert, sms_alert, subscribe, creation 
 			from app_contacts as a inner join ( select email, mobile, max(creation) as max_creation from app_contacts group by email, mobile) as b
 				on a.email=b.email and a.mobile=b.mobile and a.creation=max_creation''') 
@@ -172,11 +191,12 @@ def refresh_subscriber(dict_cur):
     rows = dict_cur.fetchall()
     for row in rows:
 	result = row
+        key = convert(row["index_key"])
 
 	#insert row into subscriber table with email and mobile as primary keys
         dict_cur.execute('''insert into subscribers (prefix, first_name, middle_name, last_name, suffix, address, address2, city, state, zip, municipality, email, mobile, carrier, 
-		recycle_zone, trash_zone, yard_zone, recycle_day, trash_day, yard_day, alert_time, alert_day, email_alert, sms_alert, subscribe, creation)
-			values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+		recycle_zone, trash_zone, yard_zone, recycle_day, trash_day, yard_day, alert_time, alert_day, email_alert, sms_alert, subscribe, creation, market_key)
+			values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 				on duplicate key update 
 					prefix=values(prefix), 
 					first_name=values(first_name), 
@@ -201,10 +221,11 @@ def refresh_subscriber(dict_cur):
 					email_alert=values(email_alert), 
 					sms_alert=values(sms_alert), 
 					subscribe=values(subscribe),
-					creation=values(creation); ''', 
+					creation=values(creation),
+                                        market_key=values(market_key); ''', 
         		(row["prefix"], row["first_name"], row["middle_name"], row["last_name"], row["suffix"], row["address"], row["address2"], row["city"], row["state"], row["zip"], row["municipality"], 
 				row["email"],row["mobile"], row["carrier"], row["recycle_zone"], row["trash_zone"], row["yard_zone"], row["recycle_day"], 
-					row["trash_day"], row["yard_day"], row["alert_time"], row["alert_day"], row["email_alert"], row["sms_alert"], row["subscribe"], row["creation"]) )
+					row["trash_day"], row["yard_day"], row["alert_time"], row["alert_day"], row["email_alert"], row["sms_alert"], row["subscribe"], row["creation"], key) )
 
 #Insert results into the messages table
 def insert_messages(dict_cur):
