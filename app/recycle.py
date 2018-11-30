@@ -280,23 +280,23 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
 
     #Get today or tomorrow.  Return null if error.
     if alert_day==0:
-	tag="today! " + sponsor_message
+	tag="Today is " + sponsor_message
     elif alert_day==1:
-	tag="tomorrow. " + sponsor_message
+	tag="Tomorrow is " + sponsor_message
     else:
 	return
 
     #Compose the message
     if length_services==1:
-	message='Your '+ translate_service(services[0]) + ' day is ' + tag
+	message = tag + translate_service(services[0]) + ' day '
     elif length_services==2:
-	message='Your '+ translate_service(services[0]) + ' and ' + translate_service(services[1]) + ' day is ' + tag
+	message = tag + translate_service(services[0]) + ' & ' + translate_service(services[1]) + ' day '
     elif length_services==3:
-	message='Your '+ translate_service(services[0]) + ', ' + translate_service(services[1]) + ' and ' + translate_service(services[2]) + ' day is ' + tag
+	message = tag + translate_service(services[0]) + ', ' + translate_service(services[1]) + ' & ' + translate_service(services[2]) + ' day '
     elif length_services==4:
-	message='Your '+ translate_service(services[0]) + ', ' + translate_services(service[1]) + ', ' + translate_service(services[2]) + ' and ' + translate_service(services[3]) + ' day is ' + tag
+	message = tag + translate_service(services[0]) + ', ' + translate_services(service[1]) + ', ' + translate_service(services[2]) + ' & ' + translate_service(services[3]) + ' day '
     else:
-	message='Your '+ translate_services(service[0]) + ', ' + translate_services(service[1]) + ', ' + translate_services(service[2]) + ', ' + translate_service(services[3]) + ' and ' + translate_services(service[4]) + ' day is ' + tag
+	message = tag + translate_services(service[0]) + ', ' + translate_services(service[1]) + ', ' + translate_services(service[2]) + ', ' + translate_service(services[3]) + ' & ' + translate_services(service[4]) + ' day '
 
     return message
 
