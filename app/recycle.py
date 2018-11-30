@@ -280,9 +280,9 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
 
     #Get today or tomorrow.  Return null if error.
     if alert_day==0:
-	tag="Today is " + sponsor_message
+	tag="Today is "
     elif alert_day==1:
-	tag="Tomorrow is " + sponsor_message
+	tag="Tomorrow is "
     else:
 	return
 
@@ -298,7 +298,7 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
     else:
 	message = tag + translate_services(service[0]) + ', ' + translate_services(service[1]) + ', ' + translate_services(service[2]) + ', ' + translate_service(services[3]) + ' & ' + translate_services(service[4]) + ' day '
 
-    return message
+    return message + sponsor_message
 
 #Compose sponsor message
 def compose_sponsor(email, mobile, dict_cur):
