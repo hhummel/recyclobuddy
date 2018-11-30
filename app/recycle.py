@@ -324,7 +324,8 @@ def compose_sponsor(email, mobile, dict_cur):
     #There should only be 1 result at most
     row = dict_cur.fetchone()
     if row:
-        return sponsor_message + OPT_OUT + "\" + row["market_key"]
+        key = row["market_key"]
+        return sponsor_message + OPT_OUT + "\" + key
     else:
         return sponsor_message + OPT_OUT
 
