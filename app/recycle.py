@@ -318,7 +318,15 @@ def compose_sponsor(email, mobile, dict_cur):
     else:
 	sponsor_message=""
 
-    return sponsor_message + OPT_OUT
+    #Get market_key for this email, mobile
+    dict_cur.execute('select market_key from subscribers where email=%s and mobile=%s', (email, mobile)) 
+    
+    #There should only be 1 result at most
+    row = dict_cur.fetchone()
+    if row:
+        return sponsor_message + OPT_OUT + "\" + row["market_key"]
+    else:
+        return sponsor_message + OPT_OUT
 
 #Compose special message
 def compose_special(email, mobile, dict_cur):
