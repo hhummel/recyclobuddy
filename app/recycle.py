@@ -280,9 +280,9 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
 
     #Get today or tomorrow.  Return null if error.
     if alert_day==0:
-	tag="Today is "
+	tag="Today: "
     elif alert_day==1:
-	tag="Tomorrow is "
+	tag="Tomorrow: "
     else:
 	return
 
