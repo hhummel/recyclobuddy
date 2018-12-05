@@ -591,9 +591,8 @@ def fire_messages(dict_cur, time_gap, f):
 	    if row["sms_alert"]==True:
 	    	sms_address=make_sms_address(row["carrier"], row["mobile"])
 	    	if sms_address:
-	            msg=email.mime.text.MIMEText(row['message'])
 	            #Strip out non-essential decoration of url
-                    msg[0] = msg[0].replace(STRIP, "")
+	            msg=email.mime.text.MIMEText(row['message'].replace(STRIP, ""))
                      
 	            msg["From"] = EMAIL_SENDER
 	            msg["To"] = sms_address
