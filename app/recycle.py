@@ -599,7 +599,7 @@ def fire_messages(dict_cur, time_gap, f):
 		    #Try to send message 5 times, with 2 second pause
 		    for i in range (1, 6):
 		    	try:
-	            	    server.sendmail(EMAIL_USER, sms_address, msg.as_string())
+	            	    server.sendmail(EMAIL_SENDER, sms_address, msg.as_string())
 			    write_log_message("success", i, f, sms_address, row["message"])
 			    break
 
