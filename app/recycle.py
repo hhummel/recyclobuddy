@@ -306,15 +306,18 @@ def compose_sponsor(email, mobile, dict_cur):
     import sys
     import os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import OPT_OUT
+    from mysite.passwords import BASE_URL, OPT_OUT
 
     #Check for sponsor message for this email, mobile and date
-    dict_cur.execute('select sponsor_message from sponsors where email=%s and mobile=%s and date<=curdate() and curdate()<date_add(date, interval 7 day)', (email, mobile)) 
+    dict_cur.execute('select sponsor_message, campaign from sponsors where email=%s and mobile=%s and date<=curdate() and curdate()<date_add(date, interval 7 day)', (email, mobile)) 
     
     #There should only be 1 result at most
     row = dict_cur.fetchone()
     if row:
-	sponsor_message = row["sponsor_message"] + OPT_OUT
+        if row["campaign"]:
+	    sponsor_message = row["sponsor_message"] + " " + BASE_URL + "/" + row["campaign"]
+        else:
+	    sponsor_message = row["sponsor_message"] +  " " + OPT_OUT 
     else:
 	sponsor_message = OPT_OUT
 
