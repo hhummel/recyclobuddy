@@ -593,7 +593,7 @@ def fire_messages(dict_cur, time_gap, f):
 	    	if sms_address:
 	            msg=email.mime.text.MIMEText(row['message'])
 	            #Strip out non-essential decoration of url
-                    msg = msg.replace(STRIP, "")
+                    msg[0] = msg[0].replace(STRIP, "")
                      
 	            msg["From"] = EMAIL_SENDER
 	            msg["To"] = sms_address
