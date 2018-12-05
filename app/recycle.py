@@ -503,7 +503,7 @@ def fire_messages(dict_cur, time_gap, f):
     import sys
     import os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER
+    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER, STRIP
 
     #Make time string
     minutes=int(time_gap/60);
@@ -592,7 +592,9 @@ def fire_messages(dict_cur, time_gap, f):
 	    	sms_address=make_sms_address(row["carrier"], row["mobile"])
 	    	if sms_address:
 	            msg=email.mime.text.MIMEText(row['message'])
-	            #msg["Subject"] = "Cans!"
+	            #Strip out non-essential decoration of url
+                    msg = msg.replace(STRIP, "")
+                     
 	            msg["From"] = EMAIL_SENDER
 	            msg["To"] = sms_address
 		
