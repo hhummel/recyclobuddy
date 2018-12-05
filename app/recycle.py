@@ -500,7 +500,7 @@ def fire_messages(dict_cur, time_gap, f):
     import sys
     import os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD
+    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER
 
     #Make time string
     minutes=int(time_gap/60);
@@ -527,6 +527,8 @@ def fire_messages(dict_cur, time_gap, f):
 	for i in range (1, 6):
 	    try:
 		server=smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT)
+                #Insert this for AWS
+                server.starttls()
 		#Print success message and break out of loop
 		write_log_message("connect_success", i, f, EMAIL_SERVER, str(EMAIL_PORT))
 		break
@@ -555,7 +557,7 @@ def fire_messages(dict_cur, time_gap, f):
 	    if row["email_alert"]==True:
 	    	msg=email.mime.text.MIMEText(row['message'])
 	    	msg["Subject"] = "Take out cans"
-	    	msg["From"] = EMAIL_USER
+	    	msg["From"] = EMAIL_SENDER
 	    	msg["To"] = row["email"]
      
                 #Include date to conform to spam filter requirements.  Date header information from blog.magiksys.net/generate-and-send-mail-with-python-tutorial
@@ -568,7 +570,7 @@ def fire_messages(dict_cur, time_gap, f):
 		#Try to send message 5 times, with 2 second pause
 		for i in range (1, 6):
 		    try:
-	    	    	server.sendmail(EMAIL_USER, [row["email"]], msg.as_string())
+	    	    	server.sendmail(EMAIL_SENDER, [row["email"]], msg.as_string())
 			#Print success message and break out of loop
 			write_log_message("success", i, f, row["email"], row["message"])
 			break
@@ -588,7 +590,7 @@ def fire_messages(dict_cur, time_gap, f):
 	    	if sms_address:
 	            msg=email.mime.text.MIMEText(row['message'])
 	            #msg["Subject"] = "Cans!"
-	            msg["From"] = EMAIL_USER
+	            msg["From"] = EMAIL_SENDER
 	            msg["To"] = sms_address
 		
 		    #Write attempt message
