@@ -258,15 +258,15 @@ def get_services(email, mobile, dict_cur):
 #Translate services into nicer form
 def translate_service(service):
     if service=="RECYCLE":
-	return "recycling"
+	return "recycle"
     elif service=="TRASH":
 	return "trash"
     elif service=="YARD":
 	return "leaf"
     elif service=="XMAS":
-	return "Christmas Tree"
+	return "Xmas Tree"
     elif service=="HAZ":
-	return "hazardous waste"
+	return "haz waste"
     else:
 	return
 
