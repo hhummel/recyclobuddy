@@ -311,13 +311,14 @@ def compose_sponsor(email, mobile, dict_cur):
     #Check for sponsor message for this email, mobile and date
     dict_cur.execute('select sponsor_message, campaign from sponsors where email=%s and mobile=%s and date<=curdate() and curdate()<date_add(date, interval 7 day)', (email, mobile)) 
     
-    #There should only be 1 result at most
+    #There should only be 1 result at most. If there is a sponsor message and campaign, build the url and market key.  If there is a message but no campaign, don't append any url.
+    #If there isn't any sponsor information at all, append the default url and market key.
     row = dict_cur.fetchone()
     if row:
         if row["campaign"]:
 	    sponsor_message = row["sponsor_message"] + " " + BASE_URL + "/" + row["campaign"]
         else:
-	    sponsor_message = row["sponsor_message"] +  " " + OPT_OUT 
+	    return row["sponsor_message"]
     else:
 	sponsor_message = OPT_OUT
 
