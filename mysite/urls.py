@@ -43,6 +43,9 @@ urlpatterns = [
     #Terms
     url(r'^app/terms$', app_views.terms, name='terms'),
 
+    #Trash Talk
+    url(r'^app/trash_talk$', app_views.trash_talk, name='trash_talk'),
+
     #REST framework
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

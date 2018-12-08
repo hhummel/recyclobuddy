@@ -284,7 +284,6 @@ def cancel(request):
 
     	return render(request, "app/cancel.html", c )
 
-#@login_required
 def about(request):
     c = {
 	'app_template': 'app/basic_template.html',
@@ -293,7 +292,6 @@ def about(request):
 
     return render(request, "app/about.html", c )
 
-#@login_required
 def faq(request):
     c = {
 	'app_template': 'app/basic_template.html',
@@ -302,7 +300,6 @@ def faq(request):
 
     return render(request, "app/faq.html", c )
 
-#@login_required
 def terms(request):
     c = {
 	'app_template': 'app/basic_template.html',
@@ -310,6 +307,14 @@ def terms(request):
     }
 
     return render(request, "app/terms.html", c )
+
+def trash_talk(request):
+    c = {
+	'app_template': 'app/basic_template.html',
+	'logo_image' : logo_image,
+    }
+
+    return render(request, "app/trash-talk.html", c )
 
 #@login_required
 def test(request):
