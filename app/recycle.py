@@ -504,7 +504,7 @@ def fire_messages(dict_cur, time_gap, f):
     import sys
     import os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER, STRIP
+    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER, EMAIL_SUBJECT, STRIP
 
     #Make time string
     minutes=int(time_gap/60);
@@ -560,7 +560,7 @@ def fire_messages(dict_cur, time_gap, f):
 	    #Send email
 	    if row["email_alert"]==True:
 	    	msg=email.mime.text.MIMEText(row['message'])
-	    	msg["Subject"] = "Take out cans"
+	    	msg["Subject"] = EMAIL_SUBJECT
 	    	msg["From"] = EMAIL_SENDER
 	    	msg["To"] = row["email"]
      
