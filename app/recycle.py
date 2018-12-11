@@ -288,15 +288,15 @@ def compose_message(prefix, first_name, middle_name, last_name, suffix, address,
 
     #Compose the message
     if length_services==1:
-	message = tag + translate_service(services[0]) + ' *** '
+	message = tag + translate_service(services[0]) + ' | '
     elif length_services==2:
-	message = tag + translate_service(services[0]) + ' & ' + translate_service(services[1]) + ' *** '
+	message = tag + translate_service(services[0]) + ' & ' + translate_service(services[1]) + ' | '
     elif length_services==3:
-	message = tag + translate_service(services[0]) + ', ' + translate_service(services[1]) + ' & ' + translate_service(services[2]) + ' *** '
+	message = tag + translate_service(services[0]) + ', ' + translate_service(services[1]) + ' & ' + translate_service(services[2]) + ' | '
     elif length_services==4:
-	message = tag + translate_service(services[0]) + ', ' + translate_services(service[1]) + ', ' + translate_service(services[2]) + ' & ' + translate_service(services[3]) + ' *** '
+	message = tag + translate_service(services[0]) + ', ' + translate_services(service[1]) + ', ' + translate_service(services[2]) + ' & ' + translate_service(services[3]) + ' | '
     else:
-	message = tag + translate_services(service[0]) + ', ' + translate_services(service[1]) + ', ' + translate_services(service[2]) + ', ' + translate_service(services[3]) + ' & ' + translate_services(service[4]) + ' *** '
+	message = tag + translate_services(service[0]) + ', ' + translate_services(service[1]) + ', ' + translate_services(service[2]) + ', ' + translate_service(services[3]) + ' & ' + translate_services(service[4]) + ' | '
 
     return message + sponsor_message
 
