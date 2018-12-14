@@ -1,7 +1,34 @@
 {% extends "app/basic_template.html" %}
 
 {% block content %}
+<h3 id="friend">Recommend us to a friend</h3>
+<h4 id="easy">It's easy. Fill this in:</h4>
+<form name="recommend" onsubmit="return false">
+  Your name:<br>
+  <input type="text" name="sender" value="e.g. John" id="sender"><br>
+  Your friend's name:<br>
+  <input type="text" name="receiver" value="e.g. Daenerys" id="receiver"><br>
+  Their email:<br>
+  <input type="text" name="email" value="e.g. daenerys@gmail.com" id="address"><br><br>
+  <input type="submit" value="Recommend" onclick="sendMail()">
+</form>
 
+<script>
+function sendMail() {
+  var el = document.forms["recommend"].elements
+  var add = el[2].value;
+  var send = el[0].value;
+  var rec = el[1].value;
+  var body = "Dear " + rec + ",\n\nI use RecycloBuddy and you might like it too! It alerts me by text & email when it's time to take out the cans. To sign up, go to https://RecycloBuddy.com and fill in the forms.  It only takes a minute.\n\n" + send;
+  var mailStr = "mailto:" + add + "?subject=" + encodeURIComponent('RecycloBuddy alerts') + "&cc=RecycloBuddy@RecycloBuddy.com" + "&body=" + encodeURIComponent(body);
+  window.location.href = mailStr;
+  document.getElementById('friend').textContent="Recommend us to more friends";
+  document.getElementById('easy').textContent="You should see email(s) ready to send";
+}
+</script>
+
+
+<hr>
 <h3>Can we talk?</h3>
 <h4>Sponsors for RecycloBuddy Alerts</h4>
 <h5>8 December 2018</h5>

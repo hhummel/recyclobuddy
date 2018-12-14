@@ -346,6 +346,17 @@ def insert_combined_messages(email, mobile, carrier, alert_time, email_alert, sm
     dict_cur.execute('insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) values (%s, %s, %s, %s, %s, %s, %s); ', 
 		(email, mobile, carrier, alert_time, email_alert, sms_alert, message) )
 
+#Compose broadcast message 
+def broadcast_message(dict_cur, inserted_message, selected_municipality, start_time, run_time, use_key):
+    if use_key:
+        dict_cur.execute('''insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
+            select email, mobile, carrier, date_add(%s, interval floor(%s*rand()) second), email_alert, sms_alert, concat(%s, market_key) from subscribers
+            where subscribe=1 and market_key is not null and municipality=%s''', (start_time, run_time, inserted_message, selected_municipality)) 
+    else:
+        dict_cur.execute('''insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
+            select email, mobile, carrier, date_add(%s, interval floor(%s*rand()) second), email_alert, sms_alert, %s from subscribers
+            where subscribe=1 and municipality=%s''', (start_time, run_time, inserted_message, selected_municipality)) 
+
 #Refresh messages database.  Requires dictionary cursor.
 def refresh_messages(dict_cur):
     #First: Gather all the messages for the day in the messages table
@@ -491,7 +502,80 @@ def write_log_message(status, iteration, f, address, message):
 	    print >>f, "Error in write_log_message: Encountered illegal status: " + status
 	else:
 	    print "Error in write_log_message: Encountered illegal status: " + status
+
+#Send a referral email
+def fire_referral(to_address, cc_address, message, f):
+    import smtplib, time
+    import email.mime.text
+    import email.utils
 	    
+    #Set up import of information from mysite package in parallel directory
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER, EMAIL_SUBJECT, STRIP
+    
+    #Only 1 attempt
+    i = 1
+
+    #Connect to smtp server
+    try:
+        server=smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT)
+        #Insert this for AWS
+        server.starttls()
+	#Print success message and break out of loop
+	write_log_message("connect_success", i, f, EMAIL_SERVER, str(EMAIL_PORT))
+
+    except (smtplib.socket.gaierror, smtplib.socket.error, smtplib.socket.herror):
+	#Print failure message
+	#write_log_message("connect_failure", i, f, EMAIL_SERVER, str(EMAIL_PORT))
+        return "connection_failure"
+
+    #Login
+    try:
+	server.login(EMAIL_USER, EMAIL_PASSWORD)
+	write_log_message("login_success", i, f, EMAIL_USER, EMAIL_PASSWORD)
+
+    except smtplib.SMTPAuthenticationError:
+	#write_log_message("login_failure", i, f, EMAIL_USER, EMAIL_PASSWORD)
+        server.quit()
+	return "login_failure"
+
+    #Set up the message
+    msg = email.mime.text.MIMEText(message)
+    msg["Subject"] = EMAIL_SUBJECT
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = to_address
+    msg["Cc"] = cc_address
+     
+    #Include date to conform to spam filter requirements.  Date header information from blog.magiksys.net/generate-and-send-mail-with-python-tutorial
+    utc_from_epoch=time.time()
+    msg["Date"] = email.utils.formatdate(utc_from_epoch, localtime=True)
+		
+    #Send the messages to the server
+    try:
+	server.sendmail(EMAIL_SENDER, [to_address] + [cc_address], msg.as_string())
+	#Print success message and break out of loop
+	write_log_message("success", i, f, to_address, message)
+
+    except smtplib.SMTPServerDisconnected:
+        #Server disconnected during sending while sending list
+        write_log_message("disconnect_failure", i, f, to_address, message)
+        pass
+
+    except Exception:
+	#Print failure message
+	write_log_message("failure", i, f, to_address, message)
+        pass
+
+    #Close connection
+    try:
+	server.quit()
+        write_log_message("quit_success", i, f, EMAIL_USER, EMAIL_PASSWORD)
+
+    except Exception:
+	write_log_message("quit_failure", i, f, EMAIL_USER, EMAIL_PASSWORD)
+
 
 #Fire messages from combined+messages table with alert_time close enough to time_gap
 def fire_messages(dict_cur, time_gap, f):
