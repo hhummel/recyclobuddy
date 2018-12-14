@@ -46,6 +46,9 @@ urlpatterns = [
     #Trash Talk
     url(r'^app/trash_talk$', app_views.trash_talk, name='trash_talk'),
 
+    #Share
+    url(r'^app/share$', app_views.share, name='share'),
+
     #REST framework
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

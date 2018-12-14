@@ -316,6 +316,14 @@ def trash_talk(request):
 
     return render(request, "app/trash-talk.html", c )
 
+def share(request):
+    c = {
+	'app_template': 'app/basic_template.html',
+	'logo_image' : logo_image,
+    }
+
+    return render(request, "app/share.html", c )
+
 #@login_required
 def test(request):
     c = {
