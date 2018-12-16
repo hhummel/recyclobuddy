@@ -347,15 +347,21 @@ def insert_combined_messages(email, mobile, carrier, alert_time, email_alert, sm
 		(email, mobile, carrier, alert_time, email_alert, sms_alert, message) )
 
 #Compose broadcast message 
-def broadcast_message(dict_cur, inserted_message, selected_municipality, start_time, run_time, use_key):
+def broadcast_message(dict_cur, selected_municipality, start, run_time, inserted_message, use_key, campaign=None):
+    #Set up import of information from mysite package in parallel directory
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from mysite.passwords import BASE_URL, OPT_OUT
+
     if use_key:
         dict_cur.execute('''insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
-            select email, mobile, carrier, date_add(%s, interval floor(%s*rand()) second), email_alert, sms_alert, concat(%s, market_key) from subscribers
-            where subscribe=1 and market_key is not null and municipality=%s''', (start_time, run_time, inserted_message, selected_municipality)) 
+            select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, concat(%s, " ", %s, "/", %s, "/", market_key) from subscribers
+            where subscribe=1 and market_key is not null and municipality=%s''', (start, run_time, inserted_message, BASE_URL, campaign, selected_municipality)) 
     else:
         dict_cur.execute('''insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
-            select email, mobile, carrier, date_add(%s, interval floor(%s*rand()) second), email_alert, sms_alert, %s from subscribers
-            where subscribe=1 and municipality=%s''', (start_time, run_time, inserted_message, selected_municipality)) 
+            select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, concat (%s, " ", %s) from subscribers
+            where subscribe=1 and municipality=%s''', (start, run_time, inserted_message, OPT_OUT, selected_municipality)) 
 
 #Refresh messages database.  Requires dictionary cursor.
 def refresh_messages(dict_cur):
@@ -413,6 +419,12 @@ def refresh_messages(dict_cur):
 		insert_combined_messages(row["email"], row["mobile"], row["carrier"], row["alert_time"], row["email_alert"], row["sms_alert"], message, dict_cur) 
 	else:
 		print "Failed to find message\n"
+
+    #Insert broadcast messages
+    dict_cur.execute('''select municipality, start, run_time, use_key, message, campaign from broadcast where date(start)=curdate()''')
+    rows = dict_cur.fetchall()
+    for row in rows:
+        broadcast_message(dict_cur, row['municipality'], row['start'], row['run_time'], row['message'], row['use_key'], row['campaign'])
 
 #Make an sms address	    
 def make_sms_address(carrier, mobile):
