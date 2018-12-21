@@ -5,7 +5,7 @@ from municipalities.schedule_helpers import get_holidays, set_simple_schedule, z
 #Set up limits for scheduling
 total_weeks = 3000
 start_date = "2014-08-10"
-stop_date = "2018-12-31"
+stop_date = "2025-12-31"
 date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
 last_date=datetime.datetime.strptime(stop_date, "%Y-%m-%d")
 

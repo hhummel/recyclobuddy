@@ -348,6 +348,8 @@ def insert_combined_messages(email, mobile, carrier, alert_time, email_alert, sm
 
 #Compose broadcast message 
 def broadcast_message(dict_cur, selected_municipality, start, run_time, inserted_message, use_key, campaign=None):
+    '''Skip broadcast message if there is already a message queue for that subscriber'''
+
     #Set up import of information from mysite package in parallel directory
     import sys
     import os
@@ -355,11 +357,11 @@ def broadcast_message(dict_cur, selected_municipality, start, run_time, inserted
     from mysite.passwords import BASE_URL, OPT_OUT
 
     if use_key:
-        dict_cur.execute('''insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
+        dict_cur.execute('''insert ignore into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
             select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, concat(%s, " ", %s, "/", %s, "/", market_key) from subscribers
             where subscribe=1 and market_key is not null and municipality=%s''', (start, run_time, inserted_message, BASE_URL, campaign, selected_municipality)) 
     else:
-        dict_cur.execute('''insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
+        dict_cur.execute('''insert ignore into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
             select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, concat (%s, " ", %s) from subscribers
             where subscribe=1 and municipality=%s''', (start, run_time, inserted_message, OPT_OUT, selected_municipality)) 
 
