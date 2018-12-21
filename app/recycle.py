@@ -342,12 +342,12 @@ def compose_special(email, mobile, dict_cur):
 
 
 #Insert combined message
-def insert_combined_messages(email, mobile, carrier, alert_time, email_alert, sms_alert, message, dict_cur): 
-    dict_cur.execute('insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) values (%s, %s, %s, %s, %s, %s, %s); ', 
-		(email, mobile, carrier, alert_time, email_alert, sms_alert, message) )
+def insert_combined_messages(email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message, dict_cur): 
+    dict_cur.execute('insert into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message) values (%s, %s, %s, %s, %s, %s, %s, %s); ', 
+		(email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message) )
 
 #Compose broadcast message 
-def broadcast_message(dict_cur, selected_municipality, start, run_time, inserted_message, use_key, campaign=None):
+def broadcast_message(dict_cur, selected_municipality, start, run_time, subject, inserted_message, use_key, campaign=None):
     '''Skip broadcast message if there is already a message queue for that subscriber'''
 
     #Set up import of information from mysite package in parallel directory
@@ -357,16 +357,22 @@ def broadcast_message(dict_cur, selected_municipality, start, run_time, inserted
     from mysite.passwords import BASE_URL, OPT_OUT
 
     if use_key:
-        dict_cur.execute('''insert ignore into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
-            select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, concat(%s, " ", %s, "/", %s, "/", market_key) from subscribers
-            where subscribe=1 and market_key is not null and municipality=%s''', (start, run_time, inserted_message, BASE_URL, campaign, selected_municipality)) 
+        dict_cur.execute('''insert ignore into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message) 
+            select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, %s, concat(%s, " ", %s, "/", %s, "/", market_key) from subscribers
+            where subscribe=1 and market_key is not null and municipality=%s''', (start, run_time, subject, inserted_message, BASE_URL, campaign, selected_municipality)) 
     else:
-        dict_cur.execute('''insert ignore into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, message) 
-            select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, concat (%s, " ", %s) from subscribers
-            where subscribe=1 and municipality=%s''', (start, run_time, inserted_message, OPT_OUT, selected_municipality)) 
+        dict_cur.execute('''insert ignore into combined_messages (email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message) 
+            select email, mobile, carrier, time(date_add(%s, interval floor(%s*rand()) second)), email_alert, sms_alert, %s, concat (%s, " ", %s) from subscribers
+            where subscribe=1 and municipality=%s''', (start, run_time, subject, inserted_message, OPT_OUT, selected_municipality)) 
 
 #Refresh messages database.  Requires dictionary cursor.
 def refresh_messages(dict_cur):
+    #Set up import of information from mysite package in parallel directory
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from mysite.passwords import SUBJECT_ALERT, SUBJECT_BROADCAST
+
     #First: Gather all the messages for the day in the messages table
 
     #Clear the messages table
@@ -418,7 +424,7 @@ def refresh_messages(dict_cur):
 	
 	#Insert combined message
 	if message:
-		insert_combined_messages(row["email"], row["mobile"], row["carrier"], row["alert_time"], row["email_alert"], row["sms_alert"], message, dict_cur) 
+		insert_combined_messages(row["email"], row["mobile"], row["carrier"], row["alert_time"], row["email_alert"], row["sms_alert"], SUBJECT_ALERT, message, dict_cur) 
 	else:
 		print "Failed to find message\n"
 
@@ -426,7 +432,7 @@ def refresh_messages(dict_cur):
     dict_cur.execute('''select municipality, start, run_time, use_key, message, campaign from broadcast where date(start)=curdate()''')
     rows = dict_cur.fetchall()
     for row in rows:
-        broadcast_message(dict_cur, row['municipality'], row['start'], row['run_time'], row['message'], row['use_key'], row['campaign'])
+        broadcast_message(dict_cur, row['municipality'], row['start'], row['run_time'], SUBJECT_BROADCAST, row['message'], row['use_key'], row['campaign'])
 
 #Make an sms address	    
 def make_sms_address(carrier, mobile):
@@ -616,9 +622,8 @@ def fire_messages(dict_cur, time_gap, f):
 	return
 
     #Find messages in range
-    dict_cur.execute('''select email, mobile, carrier, alert_time, email_alert, sms_alert, message 
+    dict_cur.execute('''select email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message 
 			from combined_messages where alert_time < curtime() and curtime()<=addtime(alert_time, %s)''', (time_str) )
-			#from combined_messages''')
 
     #Send email and/or sms text message
     rows = dict_cur.fetchall()
@@ -658,7 +663,7 @@ def fire_messages(dict_cur, time_gap, f):
 	    #Send email
 	    if row["email_alert"]==True:
 	    	msg=email.mime.text.MIMEText(row['message'])
-	    	msg["Subject"] = EMAIL_SUBJECT
+	    	msg["Subject"] = row["subject"]
 	    	msg["From"] = EMAIL_SENDER
 	    	msg["To"] = row["email"]
      
