@@ -27,7 +27,10 @@ class Cities:
         elif engine == "CHROME":
             from selenium.webdriver.chrome.options import Options
             options = Options()
-            options.headless = True
+            try:
+                options.headless = True
+            except AttributeError:
+                options.set_headless(headless=True)
             browser = webdriver.Chrome(options=options, executable_path=CHROME_PATH)
         else:
             raise ValueError('Browser must be FIREFOX, PHANTOM or CHROME')
