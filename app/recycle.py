@@ -1,7 +1,10 @@
-import urllib, urllib2
+from __future__ import print_function
+import urllib
 import re
 import datetime
 import MySQLdb
+
+
 from address import AddressParser, address
 
 import municipalities.lower_merion
