@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django import forms
 from django.utils import timezone
-from django.views.decorators import csrf 
-from django.core.urlresolvers import reverse
+from django.views.decorators import csrf
+from django.urls import reverse 
 from django.core.mail import send_mail
 
 from .forms import ContactForm, LookupForm, CancelForm
