@@ -1,7 +1,0 @@
-#!/bin/bash
-
-#Kill old process
-killall recyclobuddy.py
-
-#Start new process
-/usr/local/django/recyclocity/app/recyclobuddy.py
