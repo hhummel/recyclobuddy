@@ -426,7 +426,7 @@ def refresh_messages(dict_cur):
         if message:
                 insert_combined_messages(row["email"], row["mobile"], row["carrier"], row["alert_time"], row["email_alert"], row["sms_alert"], SUBJECT_ALERT, message, dict_cur) 
         else:
-                print "Failed to find message\n"
+                print ("Failed to find message\n")
 
     #Insert broadcast messages
     dict_cur.execute('''select municipality, start, run_time, use_key, message, campaign from broadcast where date(start)=curdate()''')
@@ -459,69 +459,69 @@ def make_sms_address(carrier, mobile):
 def write_log_message(status, iteration, f, address, message):
     if status=="attempt":
         if f:
-            print >>f, "Sending to " + address + " message: " + message
+            print ("Sending to " + address + " message: " + message, file=f)
         else:
-            print "Sending to " + address + " message: " + message
+            print ("Sending to " + address + " message: " + message)
 
     elif status=="success":
         if f:
-            print >>f, "Success sending to " + address + " message: " + message
+            print ("Success sending to " + address + " message: " + message, file=f)
         else:
-            print "Success sending to " + address + " message: " + message
+            print ("Success sending to " + address + " message: " + message)
 
     elif status=="connect_success":
         if f:
-            print >>f, "Success connecting to " + address + " message: " + message
+            print ("Success connecting to " + address + " message: " + message, file=f)
         else:
-            print "Success connecting to " + address + " message: " + message
+            print ("Success connecting to " + address + " message: " + message)
 
     elif status=="login_success":
         if f:
-            print >>f, "Success logging in to " + address + " message: " + message
+            print ("Success logging in to " + address + " message: " + message, file=f)
         else:
-            print "Success logging in to " + address + " message: " + message
+            print ("Success logging in to " + address + " message: " + message)
 
     elif status=="quit_success":
         if f:
-            print >>f, "Success quitting " + address + " message: " + message
+            print ("Success quitting " + address + " message: " + message, file=f)
         else:
-            print "Success quitting " + address + " message: " + message
+            print ("Success quitting " + address + " message: " + message)
 
     elif status=="failure":
         if f:
-            print >>f, "Failed attempt sending to " + address + " message: " + message
+            print ("Failed attempt sending to " + address + " message: " + message, file=f)
         else:
-            print "Failed attempt sending to " + address + " message: " + message
+            print ("Failed attempt sending to " + address + " message: " + message)
 
     elif status=="connect_failure":
         if f:
-            print >>f, "Failed attempt connecting to " + address + " message: " + message
+            print ("Failed attempt connecting to " + address + " message: " + message, file=f)
         else:
-            print "Failed attempt connecting to " + address + " message: " + message
+            print ("Failed attempt connecting to " + address + " message: " + message)
 
     elif status=="disconnect_failure":
         if f:
-            print >>f, "Server disconnected sending to " + address + " message: " + message
+            print ("Server disconnected sending to " + address + " message: " + message, file=f)
         else:
-            print "Server disconnected sending to " + address + " message: " + message
+            print ("Server disconnected sending to " + address + " message: " + message)
 
     elif status=="login_failure":
         if f:
-            print >>f, "Failed attempt logging into " + address + " message: " + message
+            print ("Failed attempt logging into " + address + " message: " + message, file=f)
         else:
-            print "Failed attempt logging into " + address + " message: " + message
+            print ("Failed attempt logging into " + address + " message: " + message)
 
     elif status=="quit_failure":
         if f:
-            print >>f, "Failed quitting " + address + " message: " + message
+            print ("Failed quitting " + address + " message: " + message, file=f)
         else:
-            print "Failed quitting " + address + " message: " + message
+            print ("Failed quitting " + address + " message: " + message)
 
     else:
         if f:
-            print >>f, "Error in write_log_message: Encountered illegal status: " + status
+            print ("Error in write_log_message: Encountered illegal status: " + status, file=f)
         else:
-            print "Error in write_log_message: Encountered illegal status: " + status
+            print ("Error in write_log_message: Encountered illegal status: " + status)
 
 #Fire messages from combined+messages table with alert_time close enough to time_gap
 def fire_messages(dict_cur, time_gap, f):
@@ -544,7 +544,7 @@ def fire_messages(dict_cur, time_gap, f):
     if 0<=minutes and minutes<60 and 0<=seconds and seconds<60:
         time_str="00:%02d:%02d" % (minutes, seconds)
     else:
-        print "Error time_gap out of bounds "+str(minutes)+ " " +str(seconds)
+        print ("Error time_gap out of bounds "+str(minutes)+ " " +str(seconds))
         return
 
     #Find messages in range
@@ -646,7 +646,7 @@ def fire_messages(dict_cur, time_gap, f):
                             time.sleep(5)
 
             else:
-                print "Failed to find sms address"
+                print ("Failed to find sms address")
 
         #Close connection
         try:

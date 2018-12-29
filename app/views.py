@@ -163,7 +163,7 @@ def subscribe(request, masked_key):
             try:
                     send_mail('Confirmation request', confirmation_message, 'recyclobuddy@recyclobuddy.com', [model_instance.email], fail_silently=False)
             except Exception:
-                print "Failed to send confirmation email\n"
+                print ("Failed to send confirmation email\n")
 
 
                 c = {
