@@ -26,32 +26,32 @@ class ContactForm(forms.ModelForm):
         number = self.cleaned_data['mobile']
         number_str = sub('[^0-9]', '', number.strip().lstrip("1"))
         if len(number_str) == 10:
-          return int(number_str)
+            return int(number_str)
         else:
-          raise forms.ValidationError("Please enter a mobile number in the form 8005551212")
-          return number
+            raise forms.ValidationError("Please enter a mobile number in the form 8005551212")
+            return number
 
     class Meta:
-	model = Contacts
-	fields = [
-    	    'prefix', 
-    	    'first_name',
-    	    'last_name',
-    	    'suffix',
-    	    'address',
-    	    'address2',
-    	    'city',
-    	    'state',
-    	    'zip',
-    	    'email',
-    	    'mobile',
-	    'carrier',
-	    'alert_day',
-	    'alert_time',
-	    'email_alert',
-	    'sms_alert',
-	    'terms'
-	]
+        model = Contacts
+        fields = [
+                'prefix', 
+                'first_name',
+                'last_name',
+                'suffix',
+                'address',
+                'address2',
+                'city',
+                'state',
+                'zip',
+                'email',
+                'mobile',
+            'carrier',
+            'alert_day',
+            'alert_time',
+            'email_alert',
+            'sms_alert',
+            'terms'
+        ]
 
 
 class LookupForm(forms.ModelForm):
@@ -63,12 +63,12 @@ class LookupForm(forms.ModelForm):
     zip=forms.RegexField(regex=r'^\d{5}$')    
    
     class Meta:
-	model = Contacts
-	fields = [
-    	    'municipality',
-    	    'address',
-    	    'zip',
-	]
+        model = Contacts
+        fields = [
+                'municipality',
+                'address',
+                'zip',
+        ]
 
 class CancelForm(forms.ModelForm):
 
@@ -77,11 +77,9 @@ class CancelForm(forms.ModelForm):
     mobile=forms.RegexField(regex=r'^\d{10}$')    
    
     class Meta:
-	model = Contacts
-	fields = [
-    	    'email',
-    	    'mobile'
-	]
-
-
+        model = Contacts
+        fields = [
+                'email',
+                'mobile'
+        ]
 

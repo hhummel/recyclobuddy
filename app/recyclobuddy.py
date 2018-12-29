@@ -2,18 +2,19 @@
 
 import datetime, time
 import MySQLdb
-#from django.utils import timezone
-#from django.core.mail import send_mail
+import os
 
 import recycle
 
 #Set parameters
+log_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'log/message.log'))
 
 #time_gap is how close time has to be in seconds before action occurs
 time_gap=300
 
 #Open output file
-f=open("/usr/local/django/recyclocity/log/message.log", "a")
+#f=open("/usr/local/django/recyclocity/log/message.log", "a")
+f=open(log_file, "a")
 print >>f, "RecycloBuddy (re)starting now!"
 
 #Create cycle_counter
@@ -34,18 +35,18 @@ while True:
 
     #Check to see if time is in range for refresh
     if cycle_counter==0 or (lower_time < current_time and current_time<=upper_time):
-	cycle_counter+=1
+        cycle_counter+=1
 
-	#print str(lower_time) + " " + str(upper_time) + " " + str(current_time)
+        #print str(lower_time) + " " + str(upper_time) + " " + str(current_time)
  
-    	#Refresh subscriber database
-    	recycle.refresh_subscriber(cur)
+        #Refresh subscriber database
+        recycle.refresh_subscriber(cur)
 
-    	#Refresh messages database.
-    	recycle.refresh_messages(cur)
+        #Refresh messages database.
+        recycle.refresh_messages(cur)
 
-	print  >>f, "Refresh at " + str(current_time)
-	
+        print  >>f, "Refresh at " + str(current_time)
+        
     #Fire messages for this time slice
     recycle.fire_messages(cur, time_gap, f)
 
