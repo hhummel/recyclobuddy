@@ -4,45 +4,41 @@ import re
 import datetime
 import MySQLdb
 
-
-from address import AddressParser, address
-
 import municipalities.lower_merion
 import municipalities.philadelphia
-
 
 ########################################################################################################################################################################
 #  Subroutines independent of municipality
 ########################################################################################################################################################################
 
-
 #Parse address string using address package
 def parse_address(address_string):
-        
-        ap = AddressParser()
-        address = ap.parse_address(address_string)
-        
-        #Strip out the period after street_prefix and street_suffix
+    from address import AddressParser, address
 
-        #Check for street suffix
-        if address.street_suffix:
-                #Strip out "."
-                street_suffix = re.sub('\.', '', address.street_suffix)
-        else:
-                #Missing street suffix so return error code and message
-                return 1, "Sorry, we need street identifier like St, Rd or Ave.  Please use the back arrow in fill in more of the address."
-        
-        if address.street_prefix:
-                #Strip out "."
-                street_prefix = re.sub('\.', '', address.street_prefix)
+    ap = AddressParser()
+    address = ap.parse_address(address_string)
 
-                #Make parsed string
-                parsed_address=address.house_number + " " + street_prefix + " " + address.street + " " + street_suffix
-        else:
-                parsed_address=address.house_number + " " + address.street + " " + street_suffix
+    #Strip out the period after street_prefix and street_suffix
 
-        #Return success and street address
-        return 0, parsed_address
+    #Check for street suffix
+    if address.street_suffix:
+            #Strip out "."
+            street_suffix = re.sub('\.', '', address.street_suffix)
+    else:
+            #Missing street suffix so return error code and message
+            return 1, "Sorry, we need street identifier like St, Rd or Ave.  Please use the back arrow in fill in more of the address."
+
+    if address.street_prefix:
+            #Strip out "."
+            street_prefix = re.sub('\.', '', address.street_prefix)
+
+            #Make parsed string
+            parsed_address=address.house_number + " " + street_prefix + " " + address.street + " " + street_suffix
+    else:
+            parsed_address=address.house_number + " " + address.street + " " + street_suffix
+
+    #Return success and street address
+    return 0, parsed_address
 
 
 #Get day text from day number

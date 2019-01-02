@@ -22,7 +22,7 @@ function sendMail() {
   var body = "Dear " + rec + ",\n\nI use RecycloBuddy and you might like it too! It alerts me by text & email when it's time to take out the cans.\n\nTo sign up, go to https://RecycloBuddy.com and fill in the forms.  It only takes a minute.\n\n" + send;
   var mailStr = "mailto:" + add + "?subject=" + encodeURIComponent('RecycloBuddy alerts') + "&cc=RecycloBuddy@RecycloBuddy.com" + "&body=" + encodeURIComponent(body);
   window.location.href = mailStr;
-  document.getElementById('friend').textContent="Share with more friends";
+  document.getElementById('friend').textContent="Thank you for sharing";
   document.getElementById('easy').textContent="You should see email(s) ready to send";
 }
 </script>

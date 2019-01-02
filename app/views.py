@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.template import Context, loader, RequestContext
 from app.models import Contacts
 from django.http import HttpResponse, HttpResponseRedirect
