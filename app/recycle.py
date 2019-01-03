@@ -11,36 +11,6 @@ import municipalities.philadelphia
 #  Subroutines independent of municipality
 ########################################################################################################################################################################
 
-#Parse address string using address package
-def parse_address(address_string):
-    from address import AddressParser, address
-
-    ap = AddressParser()
-    address = ap.parse_address(address_string)
-
-    #Strip out the period after street_prefix and street_suffix
-
-    #Check for street suffix
-    if address.street_suffix:
-            #Strip out "."
-            street_suffix = re.sub('\.', '', address.street_suffix)
-    else:
-            #Missing street suffix so return error code and message
-            return 1, "Sorry, we need street identifier like St, Rd or Ave.  Please use the back arrow in fill in more of the address."
-
-    if address.street_prefix:
-            #Strip out "."
-            street_prefix = re.sub('\.', '', address.street_prefix)
-
-            #Make parsed string
-            parsed_address=address.house_number + " " + street_prefix + " " + address.street + " " + street_suffix
-    else:
-            parsed_address=address.house_number + " " + address.street + " " + street_suffix
-
-    #Return success and street address
-    return 0, parsed_address
-
-
 #Get day text from day number
 def get_day_text(day_number):
         if day_number == 1:
@@ -85,8 +55,7 @@ def confirm_subscription(masked_key, first_name, last_name, alert_day, alert_tim
 #Set up database connection
 def get_database():
     #Set up import of information from mysite package in parallel directory
-    import sys
-    import os
+    import sys, os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from mysite.passwords import MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
 
@@ -97,8 +66,7 @@ def get_database():
 #Set up database connection with dictionary cursor
 def get_database_dictionary():
     #Set up import of information from mysite package in parallel directory
-    import sys
-    import os
+    import sys, os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from mysite.passwords import MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
 
@@ -118,6 +86,60 @@ def get_database_connections():
     cur = db.cursor()
     dict_cur=db.cursor(MySQLdb.cursors.DictCursor)
     return cur, dict_cur, db
+
+#Make a dictionary of abbreviations from database table
+def get_dictionary(key):
+    query = "select name, abbreviation from abbreviations where type='%s'" % (key)
+    cur = get_database_dictionary()
+    cur.execute(query)
+    dict = {row['name'].title(): row['abbreviation'].title() for row in cur.fetchall()}
+    cur.close()
+    return dict
+
+STREETS = get_dictionary("street")
+DIRECTIONS = get_dictionary("direction")
+
+#Make re pattern for matching addresses
+def make_pattern():
+    street_pattern = "|".join(STREETS.keys())
+    direction_pattern = r"\s|".join(DIRECTIONS.keys()) + r"\s"
+    pattern = r'^([0-9]+[a-zA-Z]?)\s(' + direction_pattern + r')?([a-zA-Z0-9][a-zA-Z0-9\s]*?)\s(' + street_pattern + r')$'
+    return pattern
+
+PATTERN = make_pattern()
+
+def parse_address(address_string):
+    '''Read in user form for address and return USPS format in title case. Return empty string on failed match'''
+    from re import match, sub
+
+    #Strip out periods, apostrophes and multiple spaces.  Remove leading and trailing white space. Put in title case
+    address = address_string.strip()
+    address = sub('\.', '', address)
+    address = sub("'", "", address)
+    address = address.title()
+    cleaned = " ".join(address.split())
+
+    #Try to match the pattern
+    match_object = match(PATTERN, cleaned)
+    if match_object:
+        try:
+            house_number = match_object[1]
+            direction = match_object[2]
+            street_name = match_object[3]
+            street = match_object[4]
+        except TypeError:
+            house_number = match_object.group(1)
+            direction = match_object.group(2)
+            street_name = match_object.group(3)
+            street = match_object.group(4)
+
+        if direction:
+            return 0, "%s %s %s %s" %(house_number.strip(), DIRECTIONS[direction.strip()], street_name.strip(), STREETS[street.strip()])
+        else:
+            return 0, "%s %s %s" %(house_number.strip(), street_name.strip(), STREETS[street.strip()])
+
+    else:
+        return 1, "Sorry, we need street identifier like St, Rd or Ave.  Please fill in more of the street address but no apartment number (if any)."
 
 #Read out holidays from database
 def get_holidays(municipality, start_date, stop_date, cur):
