@@ -4,7 +4,6 @@ import requests
 import re
 import datetime
 import MySQLdb
-from address import AddressParser, address
 
 import schedule_helpers
 
@@ -13,7 +12,6 @@ import schedule_helpers
 ################################################################################################################################################################################
 #   Zone and day LM specific
 ################################################################################################################################################################################
-
 
 #Find LM recycling day and zone
 def get_recycling_zone(address, zip):
