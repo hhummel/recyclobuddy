@@ -666,9 +666,6 @@ def fire_messages(dict_cur, time_gap, f):
                             write_log_message("failure", i, f, sms_address, row["message"])
                             time.sleep(5)
 
-            else:
-                print ("Failed to find sms address")
-
         #Close connection
         try:
             server.quit()
