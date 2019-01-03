@@ -1,4 +1,4 @@
-import urllib, urllib2
+import urllib
 import requests
 import mechanize
 
