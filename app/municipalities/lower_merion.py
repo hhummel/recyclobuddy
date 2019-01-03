@@ -1,6 +1,5 @@
 import urllib
 import requests
-import mechanize
 
 import re
 import datetime
@@ -30,7 +29,7 @@ def get_recycling_zone(address, zip):
             session = requests.Session()
             s = session.post('http://lmt-web.lowermerion.org/cgi-bin/recycle2.plx/', data=params, headers=headers, timeout=timeout)
             content = s.text
-            break;
+            break
         except requests.exceptions.ReadTimeout:
             attempts = attempts + 1
     

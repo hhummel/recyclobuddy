@@ -1,4 +1,5 @@
-import mechanize
+#import mechanize
+import requests
 import re
 import datetime
 import MySQLdb
@@ -17,17 +18,23 @@ def get_trash_zone(address, zip):
     '''Get trash zone/day number from city api'''
     import json, urllib
 
-    #Create a browser
-    browser=mechanize.Browser()
-
     #New Philadelphia API
     frags = {'first': 'https://api.phila.gov/ais/v1/addresses/',
         'last': '?gatekeeperKey=12070257c23a728f3c09f1d0d6c7d53b'}
 
     url = frags['first'] + urllib.quote(address) + frags['last']
 
-    r = browser.open(url)
-    json_data = json.loads(r.read())
+    attempts = 0
+    max_attempts = 5
+    timeout = 2
+    json_data = ""
+    while (json_data=="" or attempts < max_attempts):
+        try:
+            r = requests.get(url, timeout=timeout)
+            json_data = r.json()
+            break
+        except:
+            attempts = attempts + 1
 
     #Check for a result, convert to day number.  Return nothing if there's an error
     if str(zip).strip() ==json_data['features'][0]['properties']['zip_code']:
