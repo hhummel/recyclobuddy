@@ -5,6 +5,8 @@ import re
 import datetime
 import MySQLdb
 
+import sys, os
+sys.path.append(os.path.dirname(__file__))
 import schedule_helpers
 
 #Lower Merion subroutines
