@@ -32,7 +32,7 @@ def get_trash_zone(address, zip):
     #Check for a result, convert to day number.  Return nothing if there's an error
     if str(zip).strip() ==json_data['features'][0]['properties']['zip_code']:
         day = json_data['features'][0]['properties']['rubbish_recycle_day']
-	day_number = schedule_helpers.get_day_number(day)
+        day_number = schedule_helpers.get_day_number(day)
     else:
         return
 
