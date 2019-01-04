@@ -6,7 +6,7 @@ from app import views as app_views
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     
     #Index page    
     url(r'^app/$|^app/index$', app_views.index, name='index'),
