@@ -59,9 +59,9 @@ def get_database():
     #Set up import of information from mysite package in parallel directory
     import sys, os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
+    from mysite.passwords import MYSQL_HOST, MYSQL_PORT, MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
 
-    db=MySQLdb.connect(host="localhost", db=MYSQL_NAME, user=MYSQL_USER , passwd=MYSQL_PASSWORD)
+    db=MySQLdb.connect(host=MYSQL_HOST, port=MYSQL_PORT, db=MYSQL_NAME, user=MYSQL_USER , passwd=MYSQL_PASSWORD)
     cur=db.cursor()
     return cur
 
@@ -70,9 +70,9 @@ def get_database_dictionary():
     #Set up import of information from mysite package in parallel directory
     import sys, os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
+    from mysite.passwords import MYSQL_HOST, MYSQL_PORT, MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
 
-    db=MySQLdb.connect(host="localhost", db=MYSQL_NAME, user=MYSQL_USER, passwd=MYSQL_PASSWORD)
+    db=MySQLdb.connect(host=MYSQL_HOST, port=MYSQL_PORT, db=MYSQL_NAME, user=MYSQL_USER, passwd=MYSQL_PASSWORD)
     cur=db.cursor(MySQLdb.cursors.DictCursor)
     return cur
 
@@ -82,9 +82,9 @@ def get_database_connections():
     import sys
     import os
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from mysite.passwords import MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
+    from mysite.passwords import MYSQL_HOST, MYSQL_PORT, MYSQL_NAME, MYSQL_USER, MYSQL_PASSWORD
 
-    db = MySQLdb.connect(host="localhost", db=MYSQL_NAME, user=MYSQL_USER, passwd=MYSQL_PASSWORD)
+    db = MySQLdb.connect(host=MYSQL_HOST, port=MYSQL_PORT, db=MYSQL_NAME, user=MYSQL_USER, passwd=MYSQL_PASSWORD)
     cur = db.cursor()
     dict_cur=db.cursor(MySQLdb.cursors.DictCursor)
     return cur, dict_cur, db

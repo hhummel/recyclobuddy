@@ -7,7 +7,7 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
-from .passwords import MYSQL_PASSWORD, MYSQL_NAME, MYSQL_USER, EMAIL_SERVER, EMAIL_USER, EMAIL_PASSWORD, EMAIL_PORT, THE_SECRET, HOST_LIST, DJANGO_BASE, DEBUG_STATUS
+from .passwords import MYSQL_HOST, MYSQL_PORT, MYSQL_PASSWORD, MYSQL_NAME, MYSQL_USER, EMAIL_SERVER, EMAIL_USER, EMAIL_PASSWORD, EMAIL_PORT, THE_SECRET, HOST_LIST, DJANGO_BASE, DEBUG_STATUS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -64,8 +64,8 @@ DATABASES = {
         'NAME': MYSQL_NAME,
         'USER': MYSQL_USER,
         'PASSWORD': MYSQL_PASSWORD,
-        'HOST': '',
-        'PORT': '',
+        'HOST': MYSQL_HOST,
+        'PORT': MYSQL_PORT,
     }
 }
 
