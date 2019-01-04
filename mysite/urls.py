@@ -15,12 +15,12 @@ urlpatterns = [
     url(r'^$', app_views.root_index, name='root_index'),
 
     #Login in page
-    url(r'^app/login$', auth_views.login, name='django.contrib.auth.views.LoginView'),
+    url(r'^app/login$', auth_views.LoginView, name='django.contrib.auth.views.LoginView'),
 
     url(r'^success/$', app_views.success, name='success'),
 
     #Logout
-    url(r'^app/logout/$', auth_views.logout, {'next_page': '../index'}, name='django.contrib.auth.views.LogOutView'),
+    url(r'^app/logout/$', auth_views.LogoutView, {'next_page': '../index'}, name='django.contrib.auth.views.LogOutView'),
 
     #Subscribe
     #url(r'^app/subscribe$', app_views.subscribe, name='subscribe'),
