@@ -244,7 +244,9 @@ MUNICIPAL_CHOICES = (
 
 CURRENT_CHOICES = (
     ('LOWER_MERION', 'Lower Merion Township, PA'),
+    ('NEW_YORK', 'New York, NY'),
     ('PHILADELPHIA', 'Philadelphia, PA'),
+    ('DC', 'Washington, DC'),
 )
 
 HOLIDAY_CHOICES = (

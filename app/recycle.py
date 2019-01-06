@@ -3,11 +3,15 @@ import urllib
 import re
 import datetime
 import MySQLdb
+from time import sleep
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 
 import municipalities.lower_merion
 import municipalities.philadelphia
+from cities.cities import Cities
+from cities.dc import DC
+from cities.nyc import NYC
 
 ########################################################################################################################################################################
 #  Subroutines independent of municipality
@@ -723,10 +727,13 @@ def cancel_subscription(email, mobile):
 def get_initial_message(municipality, zone_dict):
     from app.models import Schedule
 
-    #Make query for next next recycling, trash and yard pick up for this zone and day
+    #Make query for next next recycling, trash and yard pick up for this zone and day. If yard doesn't exist, there's no independent schedule for it so use trash
     recycle = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="RECYCLE", zone=zone_dict["recycle_zone"], day=zone_dict["recycle_day"])
     trash = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="TRASH", zone=zone_dict["trash_zone"], day=zone_dict["trash_day"])
-    yard = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="YARD", zone=zone_dict["yard_zone"], day=zone_dict["yard_day"])
+    try:
+        yard = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="YARD", zone=zone_dict["yard_zone"], day=zone_dict["yard_day"])
+    except Schedule.DoesNotExist:
+        yard = trash
 
     #Make sorted array of days to pick up
     r=int(recycle.days_to_pickup)
@@ -907,6 +914,55 @@ def get_zones(municipality, address, zip):
             recycle_day_number=trash_day_number
             yard_zone=trash_zone
             yard_day_number=trash_day_number
+
+    #New York City look up    
+    elif municipality=="NEW_YORK":
+        #Get recycling zone
+        c = Cities()
+        browser = c.get_browser()
+        nyc = NYC(browser)
+        result = nyc.get_zone(address, zip)
+        c.close_browser()
+
+        #Test if it worked
+        if result and len(result) == 3:
+            success, (trash_zone, recycle_zone), elapsed_time = result
+        else:
+            return
+
+        #In NY zones and days are the same
+        if trash_zone and recycle_zone:
+            week_day = datetime.datetime.today().weekday() + 1
+            trash_day = trash_zone
+            yard_zone=trash_zone
+            recycle_day = recycle_zone
+            trash_day_number = week_day
+            yard_day_number = week_day
+            recycle_day_number = week_day
+
+    #Washington, DC look up    
+    elif municipality=="DC":
+        #Get recycling zone
+        c = Cities()
+        browser = c.get_browser()
+        nyc = DC(browser)
+        result = dc.get_zone(address, zip)
+        c.close_browser()
+
+        #Test if it worked
+        if result and len(result) == 3:
+            success, (trash_zone, recycle_zone), elapsed_time = result
+        else:
+            return
+
+        #In NY zones and days are the same
+        if trash_zone and recycle_zone:
+            week_day = datetime.datetime.today().weekday() + 1
+            trash_day = trash_zone
+            yard_zone=trash_zone
+            recycle_day = recycle_zone
+            trash_day_number = week_day
+            yard_day_number = week_day
 
     #Other municipalities go here
     else:

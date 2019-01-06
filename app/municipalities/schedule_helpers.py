@@ -437,6 +437,7 @@ def set_simple_schedule(municipality, service, date, last_date, total_weeks, hol
             else:
                 raise ValueError("Zone must begin with underscore: " + zone)
             days_to_pickup = get_simple_day(day, holiday_weeks, pickups, shift)
+            #next_day = monday + datetime.timedelta(days=days_to_pickup)
             next_day = monday + datetime.timedelta(days=days_to_pickup)
 
             #Insert record into app_schedule table

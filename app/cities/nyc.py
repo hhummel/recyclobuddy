@@ -1,5 +1,7 @@
 from time import sleep, time
 import re
+import sys, os
+sys.path.append(os.path.dirname(__file__))
 
 #from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -49,7 +51,7 @@ class NYC:
             return ("Requires a street address and zip code")
 
         #Try to get borough from the zip
-        borough =  self.get_borough(zip)
+        borough =  self.get_borough(int(zip))
         if not borough:
             return ("Zip code not found in NYC")
 

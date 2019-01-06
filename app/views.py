@@ -39,7 +39,7 @@ def index(request):
             address=form.cleaned_data['address']
             zip=form.cleaned_data['zip']
 
-            #Parse address to put inot standard form.  Check for error
+            #Parse address to put into standard form.  Check for error
             error_code, parsed_address = parse_address(address)
 
 
@@ -60,7 +60,7 @@ def index(request):
                 except Exception:
                     zone_dict = False
                     server_failed=True
-                       
+                    raise
 
                 if zone_dict:
                         #Do lookup from schedules table and get message

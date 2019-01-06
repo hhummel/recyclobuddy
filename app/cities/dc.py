@@ -1,4 +1,6 @@
 from time import sleep, time
+import sys, os
+sys.path.append(os.path.dirname(__file__))
 
 #from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
