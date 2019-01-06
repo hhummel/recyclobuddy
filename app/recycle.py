@@ -759,26 +759,26 @@ def get_initial_message(municipality, zone_dict):
         services=[]
         
         #See what services are on this day
-        if trash.days_to_pickup==day:
+        if t == day:
             services.append("trash")
             this_date = trash.next_date
         
-        if recycle.days_to_pickup==day:
+        if r == day:
             services.append("recycling")
             this_date = recycle.next_date
 
-        if yard.days_to_pickup==day:
+        if y == day:
             services.append("leaf")
             this_date = yard.next_date
 
-            #Make tag for message
-            if day==0:
-                tag = " day is today!"
-            elif day==1:
-                tag = " day is tomorrow!"
-            else:
-                #Make tag with formated date string
-                tag = " day is " +  this_date.strftime("%A %e %B") + "."
+        #Make tag for message
+        if day==0:
+            tag = " day is today!"
+        elif day==1:
+            tag = " day is tomorrow!"
+        else:
+            #Make tag with formated date string
+            tag = " day is " +  this_date.strftime("%A %e %B") + "."
         
         #Make the message
         l=len(services)
