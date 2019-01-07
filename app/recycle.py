@@ -114,19 +114,22 @@ def make_pattern():
 
 PATTERN = make_pattern()
 
-def parse_address(address_string):
+def parse_address(address_string, municipality):
     '''Read in user form for address and return USPS format in title case. Return empty string on failed match'''
     from re import match, sub
 
-    #Strip out periods, apostrophes and multiple spaces.  Remove leading and trailing white space. Put in title case
+    #Strip out periods, apostrophes and multiple spaces.  Remove leading and trailing white space. Put in upper case
     address = address_string.strip()
     address = sub('\.', '', address)
     address = sub("'", "", address)
     address = address.title()
     cleaned = " ".join(address.split())
 
-    #Try to match the pattern
-    match_object = match(PATTERN, cleaned)
+    #Try to match the pattern. In DC skip the parser, use theirs
+    if (municipality == "DC"):
+        return 0, address
+    else:
+        match_object = match(PATTERN, cleaned)
     if match_object:
         try:
             house_number = match_object[1]
@@ -933,9 +936,7 @@ def get_zones(municipality, address, zip):
         #In NY zones and days are the same
         if trash_zone and recycle_zone:
             week_day = datetime.datetime.today().weekday() + 1
-            trash_day = trash_zone
             yard_zone=trash_zone
-            recycle_day = recycle_zone
             trash_day_number = week_day
             yard_day_number = week_day
             recycle_day_number = week_day
@@ -945,7 +946,7 @@ def get_zones(municipality, address, zip):
         #Get recycling zone
         c = Cities()
         browser = c.get_browser()
-        nyc = DC(browser)
+        dc = DC(browser)
         result = dc.get_zone(address, zip)
         c.close_browser()
 
@@ -958,11 +959,10 @@ def get_zones(municipality, address, zip):
         #In NY zones and days are the same
         if trash_zone and recycle_zone:
             week_day = datetime.datetime.today().weekday() + 1
-            trash_day = trash_zone
             yard_zone=trash_zone
-            recycle_day = recycle_zone
             trash_day_number = week_day
             yard_day_number = week_day
+            recycle_day_number = week_day
 
     #Other municipalities go here
     else:

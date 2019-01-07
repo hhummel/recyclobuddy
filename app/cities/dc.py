@@ -24,7 +24,7 @@ class DC:
 
     def get_zone(self, address, zip):
 
-        if zip not in self.zip_codes:
+        if int(zip) not in self.zip_codes:
             return ('Zip code not found')
 
         time0 = time()     

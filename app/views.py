@@ -40,7 +40,7 @@ def index(request):
             zip=form.cleaned_data['zip']
 
             #Parse address to put into standard form.  Check for error
-            error_code, parsed_address = parse_address(address)
+            error_code, parsed_address = parse_address(address, municipality)
 
 
             if error_code == 1:
