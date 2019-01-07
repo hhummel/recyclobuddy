@@ -566,20 +566,13 @@ def fire_messages(dict_cur, time_gap, f):
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from mysite.passwords import EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD, EMAIL_SENDER, STRIP
 
-    #Make time string
-    minutes=int(time_gap/60);
-
-    seconds=time_gap%60
-
-    if 0<=minutes and minutes<60 and 0<=seconds and seconds<60:
-        time_str="00:%02d:%02d" % (minutes, seconds)
-    else:
-        print ("Error time_gap out of bounds "+str(minutes)+ " " +str(seconds))
-        return
-
+    time_str = str(time_gap)
+    TZ = "US/Eastern"
+    local = 'time(convert_tz(curtime(), "GMT", "%s"))' % (TZ) 
+    add = 'addtime(alert_time, %s)' % (time_str)
     #Find messages in range
-    dict_cur.execute('''select email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message 
-                        from combined_messages where alert_time < curtime() and curtime()<=addtime(alert_time, %s)''', (time_str) )
+    query = 'select email, mobile, carrier, alert_time, email_alert, sms_alert, subject, message from combined_messages where alert_time < %s and %s <= %s'% (local, local, add)
+    dict_cur.execute(query)
 
     #Send email and/or sms text message
     rows = dict_cur.fetchall()

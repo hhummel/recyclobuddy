@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import datetime, time
 import MySQLdb
@@ -10,43 +10,47 @@ import recycle
 log_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'log/message.log'))
 
 #time_gap is how close time has to be in seconds before action occurs
-time_gap=300
+time_gap = 300
+gap_seconds = int(time_gap % 60)
+gap_minutes = int((time_gap - gap_seconds) / 60)
 
 #Open output file
-#f=open("/usr/local/django/recyclocity/log/message.log", "a")
-f=open(log_file, "a")
-print >>f, "RecycloBuddy (re)starting now!"
+f = open(log_file, "a")
+print ("RecycloBuddy (re)starting now!", file = f)
 
 #Create cycle_counter
-cycle_counter=0
+cycle_counter = 0
+
+#Get start time
+current_time = datetime.datetime.now()
+lower_time = current_time
+upper_time = current_time.replace(hour=00, minute=gap_minutes, second=gap_seconds)
 
 #Infinite loop
 while True:
     #Get time
     current_time = datetime.datetime.now()
-    print >>f, "Current time: " + str(current_time)
-
-    #Refresh time is when to run updates.  Has today's date but preset time.
-    lower_time=current_time.replace(hour=00, minute=00)
-    upper_time=current_time.replace(hour=00, minute=time_gap/60+01)
+    print("Current time: " + str(current_time), file=f)
 
     #Set up database connection
     cur=recycle.get_database_dictionary()
 
     #Check to see if time is in range for refresh
-    if cycle_counter==0 or (lower_time < current_time and current_time<=upper_time):
-        cycle_counter+=1
+    if cycle_counter == 0 or (lower_time < current_time and current_time <= upper_time):
+        cycle_counter += 1
 
-        #print str(lower_time) + " " + str(upper_time) + " " + str(current_time)
- 
         #Refresh subscriber database
         recycle.refresh_subscriber(cur)
 
         #Refresh messages database.
         recycle.refresh_messages(cur)
 
-        print  >>f, "Refresh at " + str(current_time)
+        print("Refresh at " + str(datetime.datetime.now()), file=f)
         
+    #Refresh time is when to run updates.  Has today's date but preset time.
+    lower_time = upper_time
+    upper_time = upper_time + datetime.timedelta(seconds=time_gap)
+
     #Fire messages for this time slice
     recycle.fire_messages(cur, time_gap, f)
 
@@ -56,5 +60,11 @@ while True:
     #Flush buffer
     f.flush()
 
+    #Find how long the cycle took
+    delta = datetime.datetime.now() - current_time
+    sleep_time = time_gap - delta.seconds - delta.microseconds/1000000
+    if sleep_time < 0:
+        raise Exception("Recyclobuddy failed:  Unable to send messages within time_gap")
+
     #Sleep until next cycle
-    time.sleep(time_gap)
+    time.sleep(sleep_time)
