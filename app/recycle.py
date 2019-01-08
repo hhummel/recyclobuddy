@@ -53,7 +53,7 @@ def confirm_subscription(masked_key, first_name, last_name, alert_day, alert_tim
         else:
                 day_message="the day before pickup day"
         
-        message = "Please click or visit www.recyclobuddy.com/app/confirm_" + masked_key + " to confirm that "        
+        message = "Please click or visit https://recyclobuddy.com/app/confirm_" + masked_key + " to confirm that "        
         message = message + first_name + " "+ last_name + " wants " + alert_message + " alerts sent " + day_message + " at " + str(alert_time) + "." 
 
         return message
