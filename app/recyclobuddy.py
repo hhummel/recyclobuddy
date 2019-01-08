@@ -57,7 +57,7 @@ while True:
     f.flush()
 
     if sleep_time < 1:
-        raise Exception("Recyclobuddy failed:  Unable to send messages within time_gap: %s seconds.  Run time: %s seconds. Sleep time: %seconds" % (time_gap, run_time, sleep_time))
-
+        print("Recyclobuddy failed:  Unable to send messages within time_gap: %s seconds.  Run time: %s seconds. Sleep time: %seconds" % (time_gap, run_time, sleep_time))
+        sleep_time = 1
     #Sleep until next cycle
     time.sleep(sleep_time)
