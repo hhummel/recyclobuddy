@@ -58,7 +58,7 @@ class LookupForm(forms.ModelForm):
 
     #This statement controls whether the validation forces the field to be populated.  stackoverflow.com/questions/16205908/django-modelform-not-required-field
 
-    municipality=forms.CharField(required=False, max_length=25, widget=forms.Select(choices=CURRENT_CHOICES))
+    municipality=forms.ChoiceField(required=True, choices=CURRENT_CHOICES, widget=forms.RadioSelect)
     address=forms.RegexField(regex=r'^[0-9a-zA-Z\.\-\' ]+$')    
     zip=forms.RegexField(regex=r'^\d{5}$')    
    
