@@ -37,8 +37,14 @@ while True:
     current_time = datetime.datetime.now()
     print("Current time: " + str(current_time), file=f)
 
+    #Set up database connection
+    cur = recycle.get_database_dictionary()
+
     #Fire messages for this time slice
     recycle.fire_messages(cur, time_gap, f)
+
+    #Close the database connection
+    cur.close()
 
     #Find how long the cycle took
     delta = datetime.datetime.now() - current_time
