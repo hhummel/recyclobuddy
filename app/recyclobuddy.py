@@ -2,8 +2,9 @@
 
 import datetime, time
 import MySQLdb
-import os
+import os, sys
 
+sys.path.append(os.path.dirname(__file__))
 import recycle
 
 #Set parameters
@@ -16,15 +17,19 @@ gap_minutes = int((time_gap - gap_seconds) / 60)
 
 #Open output file
 f = open(log_file, "a")
-print ("RecycloBuddy (re)starting now!", file = f)
+print ("RecycloBuddy refresh now!", file = f)
 
-#Create cycle_counter
-cycle_counter = 0
+#Set up database connection
+cur = recycle.get_database_dictionary()
 
-#Get start time
-current_time = datetime.datetime.now()
-lower_time = current_time
-upper_time = current_time.replace(hour=00, minute=gap_minutes, second=gap_seconds)
+#Refresh subscriber database
+recycle.refresh_subscriber(cur)
+
+#Refresh messages database.
+recycle.refresh_messages(cur)
+
+#Close the database connection
+cur.close()
 
 #Infinite loop
 while True:
@@ -32,39 +37,21 @@ while True:
     current_time = datetime.datetime.now()
     print("Current time: " + str(current_time), file=f)
 
-    #Set up database connection
-    cur=recycle.get_database_dictionary()
-
-    #Check to see if time is in range for refresh
-    if cycle_counter == 0 or (lower_time < current_time and current_time <= upper_time):
-        cycle_counter += 1
-
-        #Refresh subscriber database
-        recycle.refresh_subscriber(cur)
-
-        #Refresh messages database.
-        recycle.refresh_messages(cur)
-
-        print("Refresh at " + str(datetime.datetime.now()), file=f)
-        
-    #Refresh time is when to run updates.  Has today's date but preset time.
-    lower_time = upper_time
-    upper_time = upper_time + datetime.timedelta(seconds=time_gap)
-
     #Fire messages for this time slice
     recycle.fire_messages(cur, time_gap, f)
 
-    #Close the database connection
-    cur.close()
+    #Find how long the cycle took
+    delta = datetime.datetime.now() - current_time
+    run_time = delta.seconds + delta.microseconds/1000000
+    sleep_time = time_gap - run_time
+
+    print("Run time: %s seconds, Sleep time: %s seconds" % (run_time, sleep_time), file=f)
 
     #Flush buffer
     f.flush()
 
-    #Find how long the cycle took
-    delta = datetime.datetime.now() - current_time
-    sleep_time = time_gap - delta.seconds - delta.microseconds/1000000
-    if sleep_time < 0:
-        raise Exception("Recyclobuddy failed:  Unable to send messages within time_gap")
+    if sleep_time < 1:
+        raise Exception("Recyclobuddy failed:  Unable to send messages within time_gap: %s seconds.  Run time: %s seconds. Sleep time: %seconds" % (time_gap, run_time, sleep_time))
 
     #Sleep until next cycle
     time.sleep(sleep_time)
