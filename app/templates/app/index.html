@@ -9,7 +9,7 @@
 <div class="unhidden">
 <form method="post" action="">
   {% csrf_token %}
-  <div>
+  <div class=>
     {% for field in form %}
      <div>{{field.label_tag}}</div>
      <div>{{field}}</div>
