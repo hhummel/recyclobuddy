@@ -110,7 +110,7 @@ def index(request):
             return render (request, "app/response.html", c )
  
     else:
-        form = LookupForm()
+        form = LookupForm(initial={'municipality': 'LOWER_MERION'})
 
     c = {
         'app_template': 'app/basic_template.html',
