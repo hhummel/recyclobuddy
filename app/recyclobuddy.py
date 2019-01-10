@@ -52,7 +52,7 @@ while True:
     run_time = delta.seconds + delta.microseconds/1000000
     sleep_time = time_gap - run_time
 
-    print("Messages sent: %s, Run time: %s seconds, Sending rate: % messages/sec, Sleep time: %s seconds" % (messages, run_time, messages/run_time, sleep_time), file=f)
+    print("Messages sent: %s, Run time: %.2f seconds, Sending rate: %.2f messages/sec, Sleep time: %.2f seconds" % (messages, run_time, messages/run_time, sleep_time), file=f)
 
     #Flush buffer
     f.flush()
