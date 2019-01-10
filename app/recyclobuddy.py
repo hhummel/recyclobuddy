@@ -12,9 +12,10 @@ log_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'log/
 
 #time_gap is how close time has to be in seconds before action occurs
 time_gap = 300
+#addtime in mysql reads "500" as 5 minutes
 sql_time_gap = 500
-gap_seconds = int(time_gap % 60)
-gap_minutes = int((time_gap - gap_seconds) / 60)
+#Drift in cycle time
+drift = 0.10
 
 #Open output file
 f = open(log_file, "a")
@@ -50,7 +51,7 @@ while True:
     #Find how long the cycle took
     delta = datetime.datetime.now() - current_time
     run_time = delta.seconds + delta.microseconds/1000000
-    sleep_time = time_gap - run_time
+    sleep_time = time_gap - run_time - drift
 
     print("Messages sent: %s, Run time: %.2f seconds, Sending rate: %.2f messages/sec, Sleep time: %.2f seconds" % (messages, run_time, messages/run_time, sleep_time), file=f)
 
