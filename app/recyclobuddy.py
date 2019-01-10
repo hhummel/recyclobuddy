@@ -12,6 +12,7 @@ log_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'log/
 
 #time_gap is how close time has to be in seconds before action occurs
 time_gap = 300
+sql_time_gap = 500
 gap_seconds = int(time_gap % 60)
 gap_minutes = int((time_gap - gap_seconds) / 60)
 
@@ -41,7 +42,7 @@ while True:
     cur = recycle.get_database_dictionary()
 
     #Fire messages for this time slice
-    recycle.fire_messages(cur, time_gap, f)
+    messages = recycle.fire_messages(cur, sql_time_gap, f)
 
     #Close the database connection
     cur.close()
@@ -51,7 +52,7 @@ while True:
     run_time = delta.seconds + delta.microseconds/1000000
     sleep_time = time_gap - run_time
 
-    print("Run time: %s seconds, Sleep time: %s seconds" % (run_time, sleep_time), file=f)
+    print("Messages sent: %s, Run time: %s seconds, Sending rate: % messages/sec, Sleep time: %s seconds" % (messages, run_time, messages/run_time, sleep_time), file=f)
 
     #Flush buffer
     f.flush()

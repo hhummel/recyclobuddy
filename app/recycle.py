@@ -339,7 +339,7 @@ def compose_sponsor(email, mobile, dict_cur):
     from mysite.passwords import BASE_URL, OPT_OUT
 
     #Check for sponsor message for this email, mobile and date
-    dict_cur.execute('select sponsor_message, campaign from sponsors where email=%s and mobile=%s and date<=curdate() and curdate()<date_add(date, interval 7 day)', (email, mobile)) 
+    dict_cur.execute('select sponsor_message, campaign from sponsors where email=%s and mobile=%s and date<=date(convert_tz(now(), "GMT", "US/Eastern")) and date(convert_tz(now(), "GMT", "US/Eastern"))<date_add(date, interval 7 day)', (email, mobile)) 
     
     #There should only be 1 result at most. If there is a sponsor message and campaign, build the url and market key.  If there is a message but no campaign, don't append any url.
     #If there isn't any sponsor information at all, append the default url and market key.
@@ -412,21 +412,21 @@ def refresh_messages(dict_cur):
     dict_cur.execute('''select prefix, first_name, middle_name, last_name, suffix, address, address2, city, state, zip, s1.municipality, email, mobile, carrier, 
                 service, alert_time, alert_day, email_alert, sms_alert 
                         from subscribers as s1 inner join app_schedule as s2 on recycle_zone=zone and recycle_day=day and s1.municipality=s2.municipality 
-                                        where days_to_pickup=alert_day and date=curdate() and service="RECYCLE" and subscribe=True''') 
+                                        where days_to_pickup=alert_day and date=date(convert_tz(now(), "GMT", "US/Eastern")) and service="RECYCLE" and subscribe=True''') 
     insert_messages(dict_cur)
     
     #Query find trash
     dict_cur.execute('''select prefix, first_name, middle_name, last_name, suffix, address, address2, city, state, zip, s1.municipality, email, mobile, carrier, 
                 service, alert_time, alert_day, email_alert, sms_alert 
                         from subscribers as s1 inner join app_schedule as s2 on trash_zone=zone and trash_day=day and s1.municipality=s2.municipality 
-                                        where days_to_pickup=alert_day and date=curdate() and service="TRASH" and subscribe=True''') 
+                                        where days_to_pickup=alert_day and date=date(convert_tz(now(), "GMT", "US/Eastern")) and service="TRASH" and subscribe=True''') 
     insert_messages(dict_cur)
     
     #Query find YARD
     dict_cur.execute('''select prefix, first_name, middle_name, last_name, suffix, address, address2, city, state, zip, s1.municipality, email, mobile, carrier, 
                 service, alert_time, alert_day, email_alert, sms_alert 
                         from subscribers as s1 inner join app_schedule as s2 on yard_zone=zone and yard_day=day and s1.municipality=s2.municipality 
-                                        where days_to_pickup=alert_day and date=curdate() and service="YARD" and subscribe=True''') 
+                                        where days_to_pickup=alert_day and date=date(convert_tz(now(), "GMT", "US/Eastern")) and service="YARD" and subscribe=True''') 
     insert_messages(dict_cur)
 
     #Second:  Combine the messages together in the combined_messages table and compose the message
@@ -459,7 +459,7 @@ def refresh_messages(dict_cur):
                 print ("Failed to find message\n")
 
     #Insert broadcast messages
-    dict_cur.execute('''select municipality, start, run_time, use_key, message, campaign from broadcast where date(start)=curdate()''')
+    dict_cur.execute('''select municipality, start, run_time, use_key, message, campaign from broadcast where date(start)=date(convert_tz(now(), "GMT", "US/Eastern"))''')
     rows = dict_cur.fetchall()
     for row in rows:
         broadcast_message(dict_cur, row['municipality'], row['start'], row['run_time'], SUBJECT_BROADCAST, row['message'], row['use_key'], row['campaign'])
@@ -577,6 +577,8 @@ def fire_messages(dict_cur, time_gap, f):
     #Send email and/or sms text message
     rows = dict_cur.fetchall()
     
+    message_count = 0
+    
     #If any rows are returned, set up email connection.  See stackoverflow.com/questions/984526/correct-way-of-handling-exceptions-in-python
     if rows:
         #Try to connect to host up to 5 times
@@ -600,6 +602,7 @@ def fire_messages(dict_cur, time_gap, f):
                 server.login(EMAIL_USER, EMAIL_PASSWORD)
                 #Print success message and break out of loop
                 write_log_message("login_success", i, f, EMAIL_USER, EMAIL_PASSWORD)
+                message_count += 1
                 break
 
             except smtplib.SMTPAuthenticationError:
@@ -629,6 +632,7 @@ def fire_messages(dict_cur, time_gap, f):
                         server.sendmail(EMAIL_SENDER, [row["email"]], msg.as_string())
                         #Print success message and break out of loop
                         write_log_message("success", i, f, row["email"], row["message"])
+                        message_count += 1
                         break
 
                     except smtplib.SMTPServerDisconnected:
@@ -675,6 +679,7 @@ def fire_messages(dict_cur, time_gap, f):
         except Exception:
             write_log_message("quit_failure", i, f, EMAIL_USER, EMAIL_PASSWORD)
 
+    return message_count
 
 #Cancel service
 def cancel_subscription(email, mobile):
