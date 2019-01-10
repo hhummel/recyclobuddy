@@ -23,7 +23,7 @@ def get_trash_zone(address, zip):
     frags = {'first': 'https://api.phila.gov/ais/v1/addresses/',
         'last': '?gatekeeperKey=12070257c23a728f3c09f1d0d6c7d53b'}
 
-    url = frags['first'] + urllib.quote(address) + frags['last']
+    url = frags['first'] + urllib.parse.quote(address) + frags['last']
 
     attempts = 0
     max_attempts = 5
