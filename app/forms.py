@@ -60,8 +60,8 @@ class LookupForm(forms.ModelForm):
     municipality = forms.ChoiceField(choices=CURRENT_CHOICES, widget=forms.RadioSelect)
 
     #municipality=forms.CharField(required=True, max_length=12, widget=forms.RadioSelect(choices=CURRENT_CHOICES))
-    address=forms.RegexField(regex=r'^[0-9a-zA-Z\.\-\' ]+$')    
-    zip=forms.RegexField(regex=r'^\d{5}$')    
+    address=forms.RegexField(regex=r'^[0-9a-zA-Z\.\-\' ]+$', widget=forms.TextInput(attrs={'placeholder': '123 Main St', 'size': '30'}))    
+    zip=forms.RegexField(regex=r'^\d{5}$', widget=forms.TextInput(attrs={'placeholder': '12345', 'size': '30'}))    
    
     class Meta:
         model = Contacts
