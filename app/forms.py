@@ -13,7 +13,7 @@ class ContactForm(forms.ModelForm):
     address=forms.RegexField(regex=r'^[0-9a-zA-Z\.\-\' ]+$')    
     address2=forms.RegexField(required=False, regex=r'^[0-9a-zA-Z\.\-\' ]+$')    
     city=forms.RegexField(regex=r'^[a-zA-Z\.\-\' ]+$')    
-    state=forms.CharField(required=True, max_length=2, widget=forms.Select(choices=STATE_CHOICES))
+    #state=forms.CharField(required=True, max_length=2, widget=forms.Select(choices=STATE_CHOICES))
     carrier=forms.CharField(required=True, max_length=3, widget=forms.Select(choices=CARRIER_CHOICES))
     alert_day = forms.IntegerField(required=True, widget=forms.Select(choices=ALERT_CHOICES))
     alert_time =forms.TimeField(required=False, widget=forms.Select(choices=ALERT_TIMES))
@@ -41,7 +41,7 @@ class ContactForm(forms.ModelForm):
                 'address',
                 'address2',
                 'city',
-                'state',
+                #'state',
                 'zip',
                 'email',
                 'mobile',
