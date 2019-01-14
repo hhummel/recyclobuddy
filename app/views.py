@@ -84,7 +84,7 @@ def index(request):
                         if server_failed==False:
                             message = "Didn't work. City couldn't locate that address. Is it correct?"
                         else:
-                            message = "Please try again or email recyclobuddy@recyclobuddy.com for help."
+                            message = "Can't reach city server. Email recyclobuddy@recyclobuddy.com for help."
                             
                         subscribe_URL=""
                         form=LookupForm(request.POST)
@@ -100,7 +100,16 @@ def index(request):
             }
 
             return render (request, "app/index.html", c )
- 
+
+        else:
+            c = {
+                    'app_template': 'app/basic_template.html',
+                    'logo_image' : logo_image,
+                    'message': 'Hit a snag on street address. Leave off any apt or suite info',
+                    'form' : form
+            }
+
+            return render (request, "app/index.html", c ) 
     else:
         form = LookupForm(initial={'municipality': 'LOWER_MERION'})
 
