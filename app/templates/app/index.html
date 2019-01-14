@@ -2,9 +2,17 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<p>Reminds you it's trash and recycling day.  Free.  Simple as that.</p>
+{% if message %}
+  <p>{{message}}</p>
+{% else %}
+  <p>Reminds you it's trash and recycling day.  Free.  Simple as that.</p>
+{% endif %}
 <p class="hidden"><img src="{% static "images/ajax-loader.gif" %}" class="img-responsive center-block"></p>
-<p class="update">Find your next pickup day:</p>
+{% if message %}
+  <p>Try again or email recyclobuddy@recyclobuddy.com for help</p>
+{% else %}
+  <p class="update">Find your next pickup day:</p>
+{% endif %}
 <br>
 <div class="unhidden">
 <form method="post" action="">

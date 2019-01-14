@@ -28,7 +28,7 @@ logo_image="recyclobuddy_logo.jpg"
 
 #See pydanny.com/core-concepts-django-modelforms.html, but note several errors in the example code.
 def index(request):
-    messages=[]
+    message = ""
     if request.method == "POST":
         form = LookupForm(request.POST)
 
@@ -45,9 +45,7 @@ def index(request):
 
             if error_code == 1:
                 #If error_code==1, failed to find street identifier
-                messages.append("Reminds you it's recycling and trash day.  Free.  Simple as that.")
-                messages.append("Sorry, that didn't come back as a valid address. ")
-                messages.append("Please check the zip code and municipality.")
+                message = "Didn't work. Please check municipality and omit apartment or suite from address."
                 subscribe_URL=""
 
             else:
@@ -84,13 +82,9 @@ def index(request):
                 else:
                         #Failed.  Could be the address wasn't good, (server_failed is False), or that server can't be reached. 
                         if server_failed==False:
-                            messages.append("Reminds you it's recycling and trash day.  Free.  Simple as that.")
-                            messages.append("Sorry, that didn't come back as a valid address. ")
-                            messages.append("Please check the zip code and municipality.")
+                            message = "Didn't work. City couldn't locate that address. Is it correct?"
                         else:
-                            messages.append("Reminds you it's recycling and trash day.  Free.  Simple as that.")
-                            messages.append("Sorry, RecycloBuddy couldn't get information from your town's server.")
-                            messages.append("Please try again or email recyclobuddy@recyclobuddy.com for help.")
+                            message = "Please try again or email recyclobuddy@recyclobuddy.com for help."
                             
                         subscribe_URL=""
                         form=LookupForm(request.POST)
@@ -100,14 +94,12 @@ def index(request):
             c = {
                     'app_template': 'app/basic_template.html',
                     'logo_image' : logo_image,
-                    'message_1': messages[0],
-                    'message_2': messages[1],
-                    'message_3': messages[2],
+                    'message': message,
                     'subscribe_URL': subscribe_URL,
                     'form' : form
             }
 
-            return render (request, "app/response.html", c )
+            return render (request, "app/index.html", c )
  
     else:
         form = LookupForm(initial={'municipality': 'LOWER_MERION'})
