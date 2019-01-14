@@ -2,6 +2,21 @@
 
 {% block content %}
 <hr>
+<h3 id="sponsor">RecycloBuddy Survey</h3>
+<h4 id="quality">Share your thoughts</h4>
+<h5>20 January 2019</h5>
+<form name="sponsors" onsubmit="return false">
+  <p>Your name:</p>
+  <input type="text" name="sender" placeholder="e.g. Rumpelstiltskin" size=35><br><br>
+
+  <p>We're looking for potential sponsors. Are there local firms you can personally recommend we should talk to?</p>
+  <input type="text" name="name" placeholder="e.g. Contractors, yoga studios, law firms..." size=35><br><br>
+  <p>Suggestions to improve RecycloBuddy?</p>
+  <input type="text" name="suggestion" placeholder="e.g. Get a better logo" size=35><br><br>
+  <input type="submit" value="Share" onclick="sponsorSurvey()">
+</form>
+
+<hr>
 <h3>Xmas trees, electronics & clothes</h3>
 <h4>Details on pickups</h4>
 <h5>12 January 2019</h5>
@@ -34,6 +49,19 @@
 </form>
 
 <script>
+function sponsorSurvey() {
+  var el = document.forms["sponsors"].elements;
+  var add = encodeURIComponent('recyclobuddy@recyclobuddy.com');
+  var sender = el[0].value;
+  var sponsor = el[1].value;
+  var suggestion = el[2].value;
+  var body = "Dear RecycloBuddy,\n\nMy sponsor recommendation is:\n" + sponsor +" \n\nMy suggestion to improve RecycloBuddy is:\n" + suggestion +"\n\n" + sender;
+  var mailStr = "mailto:" + add + "?subject=" + encodeURIComponent('RecycloBuddy sponsors') + "&body=" + encodeURIComponent(body);
+  window.location.href = mailStr;
+	document.getElementById('sponsor').innerHTML="Thanks for supporting and <a href='share'>sharing</a> RecycloBuddy";
+  document.getElementById('quality').textContent="You should see an email ready to send";
+}
+
 function sendMail() {
   var el = document.forms["recommend"].elements;
   var add = el[2].value;
