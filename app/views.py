@@ -105,7 +105,7 @@ def index(request):
             c = {
                     'app_template': 'app/basic_template.html',
                     'logo_image' : logo_image,
-                    'message': 'Hit a snag on street address. Leave off any apt or suite info',
+                    'message': 'Hit a snag. Omit any apt or suite info, use 5-digit zip',
                     'form' : form
             }
 
