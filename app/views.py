@@ -82,9 +82,9 @@ def index(request):
                 else:
                         #Failed.  Could be the address wasn't good, (server_failed is False), or that server can't be reached. 
                         if server_failed==False:
-                            message = "Didn't work. City couldn't locate that address. Is it correct?"
+                            message = "Didn't work. City couldn't locate that address. Missing N-S-E-W? "
                         else:
-                            message = "Can't reach city server. Email recyclobuddy@recyclobuddy.com for help."
+                            message = "Can't reach city server. Could be down or heavily loaded."
                             
                         subscribe_URL=""
                         form=LookupForm(request.POST)
