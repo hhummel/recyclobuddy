@@ -3,16 +3,17 @@
 {% load crispy_forms_tags %}
 {% block content %}
 {% if message %}
-  <p class=error>{{message}}</p>
+  <div class="error">
+    <p>{{message}}</p>
+    <p>Try again or <a href="mailto:recyclobuddy@recyclobuddy.com?subject=Help with subscribing">email</a> for help</p>
+  </div>
 {% else %}
-  <p>Reminds you it's trash and recycling day.  Free.  Simple as that.</p>
+  <div>
+    <p>Reminds you it's trash and recycling day. Simple as that.</p>
+    <p>Find your next pickup day:</p>
+  </div>
 {% endif %}
 <p class="hidden"><img src="{% static "images/ajax-loader.gif" %}" class="img-responsive center-block"></p>
-{% if message %}
-  <p class=error>Try again or email recyclobuddy@recyclobuddy.com for help</p>
-{% else %}
-  <p class="update">Find your next pickup day:</p>
-{% endif %}
 <br>
 <div class="unhidden">
 <form method="post" action="">
