@@ -56,7 +56,7 @@ function sponsorSurvey() {
   var sponsor = el[1].value;
   var suggestion = el[2].value;
   var body = "Dear RecycloBuddy,\n\nMy sponsor recommendation is:\n" + sponsor +" \n\nMy suggestion to improve RecycloBuddy is:\n" + suggestion +"\n\n" + sender;
-  var mailStr = "mailto:" + add + "?subject=" + encodeURIComponent('RecycloBuddy sponsors') + "&body=" + encodeURIComponent(body);
+  var mailStr = "mailto:" + add + "?subject=" + encodeURIComponent('RecycloBuddy survey') + "&body=" + encodeURIComponent(body);
   window.location.href = mailStr;
 	document.getElementById('sponsor').innerHTML="Thanks for supporting and <a href='share'>sharing</a> RecycloBuddy";
   document.getElementById('quality').textContent="You should see an email ready to send";
