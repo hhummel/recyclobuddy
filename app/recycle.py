@@ -602,7 +602,6 @@ def fire_messages(dict_cur, time_gap, f):
                 server.login(EMAIL_USER, EMAIL_PASSWORD)
                 #Print success message and break out of loop
                 write_log_message("login_success", i, f, EMAIL_USER, EMAIL_PASSWORD)
-                message_count += 1
                 break
 
             except smtplib.SMTPAuthenticationError:
@@ -662,6 +661,7 @@ def fire_messages(dict_cur, time_gap, f):
                         try:
                             server.sendmail(EMAIL_SENDER, sms_address, msg.as_string())
                             write_log_message("success", i, f, sms_address, row["message"])
+                            message_count += 1
                             break
 
                         except smtplib.SMTPServerDisconnected:

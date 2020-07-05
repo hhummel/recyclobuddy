@@ -23,6 +23,7 @@ print ("RecycloBuddy refresh now!", file = f)
 
 #Set up database connection
 cur = recycle.get_database_dictionary()
+cur.execute("set autocommit = 1")
 
 #Refresh subscriber database
 recycle.refresh_subscriber(cur)
