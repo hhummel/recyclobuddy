@@ -729,12 +729,13 @@ def get_initial_message(municipality, zone_dict):
     from app.models import Schedule
 
     #Make query for next next recycling, trash and yard pick up for this zone and day. If yard doesn't exist, there's no independent schedule for it so use trash
-    recycle = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="RECYCLE", zone=zone_dict["recycle_zone"], day=zone_dict["recycle_day"])
     trash = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="TRASH", zone=zone_dict["trash_zone"], day=zone_dict["trash_day"])
     try:
+        recycle = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="RECYCLE", zone=zone_dict["recycle_zone"], day=zone_dict["recycle_day"])
         yard = Schedule.objects.get(date=datetime.date.today(), municipality=municipality, service="YARD", zone=zone_dict["yard_zone"], day=zone_dict["yard_day"])
     except Schedule.DoesNotExist:
         yard = trash
+        recycle = trash
 
     #Make sorted array of days to pick up
     r=int(recycle.days_to_pickup)
@@ -886,14 +887,14 @@ def get_zones(municipality, address, zip):
     #Lower Merion look up
     if municipality=="LOWER_MERION":
         #Get recycling zone
-        result = municipalities.lower_merion.get_recycling_zone(address, zip)
+        result = municipalities.lower_merion.get_trash_zone(address, zip)
 
         #Assign zone and day values if it worked.
         if result:
-            recycle_day_number, recycle_zone = result
-            trash_day_number =  recycle_day_number
-            yard_day_number =  recycle_day_number
-            trash_zone = recycle_zone[1]
+            trash_day_number, trash_zone = result
+            recycle_day_number =  trash_day_number
+            yard_day_number =  trash_day_number
+            recycle_zone = "A" + trash_zone
             yard_zone = trash_zone
         else:
             return

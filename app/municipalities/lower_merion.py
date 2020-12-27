@@ -83,6 +83,22 @@ def get_trash_zone(address, zip):
     #Match for both day and zone        
     return day_number, zone
 
+def get_PC(d1, d2=datetime.date(2020, 7, 19)):
+    """
+    Determine if it's a P or C week
+    :param: d1 datetime.date date for which to get P or C
+    :returns: "P" or "C" if d2 is a datetime.date else None
+    Borrowed from https://stackoverflow.com/questions/14191832/how-to-calculate-difference-between-two-dates-in-weeks-in-python
+    """
+    if not isinstance(d1, datetime.date):
+        return None
+    
+    weeks_between = (d1 -  d2).days // 7
+    if weeks_between % 2:
+        return "P"
+    return "C"
+
+
 ################################################################################################################################################################################
 #   Schedule LM specific
 ################################################################################################################################################################################

@@ -1,0 +1,122 @@
+Success connecting to email-smtp.us-east-1.amazonaws.com message: 587
+Success logging in to AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Success sending to ahszl1@aol.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/qS
+Success sending to 6102468590@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/qS
+Success sending to cebradford@comcast.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/jR
+Success sending to 6103169776@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/jR
+Success sending to chawla66@hotmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/rW
+Success sending to 9167615983@txt.att.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/rW
+Success sending to 2074153033@txt.att.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/j5
+Success sending to hkrichman@ceoexpress.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Cv
+Success sending to 2156067943@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/6A
+Success sending to jesscargot@gmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wf
+Success sending to 5105015379@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wf
+Success sending to jlisle7@gmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/rL
+Success sending to 6104053560@tmomail.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/rL
+Success sending to 6105747163@txt.att.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/rA
+Success sending to 4846809903@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/xW
+Success sending to Kimmel8@comcast.net message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/EO
+Success sending to 6102830031@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/EO
+Success sending to lckits@gmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Cy
+Success sending to 6103578188@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Cy
+Success sending to 2679092525@txt.att.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/x7
+Success sending to 6099802520@txt.att.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wn
+Success sending to 9175239982@vtext.com message: Tomorrow: recycle, trash & leaf | Cancel: https://w8d.io/2/8u
+Success sending to thetwomeyfamily@yahoo.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/WD
+Success sending to 2155102421@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/WD
+Success sending to tmccartney16@yahoo.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/xz
+Success sending to 9173632113@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/xz
+Success sending to wboonn@gmail.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/AT
+Success sending to 2153508848@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/AT
+Success quitting AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Run time: 3.9079319999999997 seconds, Sleep time: 296.092068 seconds
+Current time: 2019-01-10 00:06:48.982425
+Run time: 0.050592 seconds, Sleep time: 299.949408 seconds
+Current time: 2019-01-10 00:11:49.082627
+Run time: 0.032537 seconds, Sleep time: 299.967463 seconds
+Current time: 2019-01-10 00:16:49.182831
+Run time: 0.039309 seconds, Sleep time: 299.960691 seconds
+Current time: 2019-01-10 00:21:49.283045
+Run time: 0.037222 seconds, Sleep time: 299.962778 seconds
+Current time: 2019-01-10 00:26:49.341892
+Run time: 0.047394 seconds, Sleep time: 299.952606 seconds
+Current time: 2019-01-10 00:31:49.360888
+Success connecting to email-smtp.us-east-1.amazonaws.com message: 587
+Success logging in to AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Success sending to dna629@hotmail.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/WP
+Success sending to 6107311846@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/WP
+Success quitting AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Run time: 0.342326 seconds, Sleep time: 299.657674 seconds
+Current time: 2019-01-10 00:36:49.461106
+Run time: 0.038597 seconds, Sleep time: 299.961403 seconds
+Current time: 2019-01-10 00:41:49.505030
+Run time: 0.055254 seconds, Sleep time: 299.944746 seconds
+Current time: 2019-01-10 00:46:49.528938
+Run time: 0.046718 seconds, Sleep time: 299.953282 seconds
+Current time: 2019-01-10 00:51:49.611501
+Success connecting to email-smtp.us-east-1.amazonaws.com message: 587
+Success logging in to AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Success sending to tlasky@zavodnicklaw.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/3W
+Success sending to 6104208330@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/3W
+Success quitting AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Run time: 0.337253 seconds, Sleep time: 299.662747 seconds
+Current time: 2019-01-10 00:56:49.711749
+Run time: 0.040224 seconds, Sleep time: 299.959776 seconds
+Current time: 2019-01-10 01:01:49.811951
+Success connecting to email-smtp.us-east-1.amazonaws.com message: 587
+Success logging in to AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Success sending to 6109998877@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/rE
+Success sending to davepratter@gmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wk
+Success sending to 4848326348@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wk
+Success sending to 6108880754@txt.att.net message: Tomorrow: recycle, trash & leaf | Cancel: https://w8d.io/2/s0
+Success sending to ilysse.pratter@gmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Ww
+Success sending to 6104538692@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Ww
+Success sending to 6105062625@txt.att.net message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/mx
+Success sending to orlindi@gmail.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Bc
+Success sending to 6107152699@vtext.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Bc
+Success quitting AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Run time: 1.217037 seconds, Sleep time: 298.782963 seconds
+Current time: 2019-01-10 01:06:49.912179
+Run time: 0.050613 seconds, Sleep time: 299.949387 seconds
+Current time: 2019-01-10 01:11:50.012388
+Success connecting to email-smtp.us-east-1.amazonaws.com message: 587
+Success logging in to AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Success sending to barnettbon@gmail.com message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/E6
+Success sending to 2154701436@txt.att.net message: Tomorrow: trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/E6
+Success quitting AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Run time: 0.511217 seconds, Sleep time: 299.488783 seconds
+Current time: 2019-01-10 01:16:50.112610
+Run time: 0.049325 seconds, Sleep time: 299.950675 seconds
+RecycloBuddy refresh now!
+Current time: 2019-01-10 01:21:05.045774
+Run time: 0.025943 seconds, Sleep time: 299.974057 seconds
+RecycloBuddy refresh now!
+Current time: 2019-01-10 01:21:23.325610
+Run time: 0.027953 seconds, Sleep time: 299.972047 seconds
+Current time: 2019-01-10 01:26:23.425817
+Run time: 0.039096 seconds, Sleep time: 299.960904 seconds
+Current time: 2019-01-10 01:31:23.452423
+Run time: 0.036876 seconds, Sleep time: 299.963124 seconds
+Current time: 2019-01-10 01:36:23.552635
+Run time: 0.0356 seconds, Sleep time: 299.9644 seconds
+Current time: 2019-01-10 01:41:23.652838
+Run time: 0.050074 seconds, Sleep time: 299.949926 seconds
+Current time: 2019-01-10 01:46:23.753042
+Run time: 0.05412 seconds, Sleep time: 299.94588 seconds
+Current time: 2019-01-10 01:51:23.779292
+Run time: 0.039727 seconds, Sleep time: 299.960273 seconds
+Current time: 2019-01-10 01:56:23.851753
+Run time: 0.050286 seconds, Sleep time: 299.949714 seconds
+Current time: 2019-01-10 02:01:23.859429
+Success connecting to email-smtp.us-east-1.amazonaws.com message: 587
+Success logging in to AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Success sending to lbeckermd@gmail.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wy
+Success sending to 6105856039@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Wy
+Success sending to 6104201004@vtext.com message: Tomorrow: recycle, trash & leaf | Glorious Grain: Delicious challah, crusty boules & cornbread delivered. Handmade. Fresh. Real. https://w8d.io/4/Op
+Success quitting AKIAJJHSYVMDXEW4TKGQ message: Ai/gwapiHDB082mjVBwz73SJ6MWajxZFhx57FyJcBdfU
+Run time: 0.538678 seconds, Sleep time: 299.461322 seconds
+RecycloBuddy refresh now!
+Current time: 2019-01-10 02:03:52.255802
+Run time: 0.026397 seconds, Sleep time: 299.973603 seconds
+Current time: 2019-01-10 02:08:52.356010
+Run time: 0.049716 seconds, Sleep time: 299.950284 seconds
