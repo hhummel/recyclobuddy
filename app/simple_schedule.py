@@ -1,5 +1,5 @@
 import datetime, MySQLdb
-from recycle import get_database
+from recycle import get_database_connections
 from municipalities.schedule_helpers import get_holidays, set_simple_schedule, zone_combinations
 
 #Set up limits for scheduling
@@ -10,7 +10,7 @@ date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
 last_date=datetime.datetime.strptime(stop_date, "%Y-%m-%d")
 
 #Set up database
-cur=get_database()
+cur, cur_dict, db = get_database_connections()
 
 #Set schedule for municipalities with weekly pickups
 
@@ -24,12 +24,14 @@ shift = "DOWN"
 zones = zone_combinations(days, 2, 6)
 for zone in zones:
     set_simple_schedule(municipality, service, date, last_date, total_weeks, holidays, zone, shift, cur)
+    db.commit()
 
 service = "RECYCLE"
 shift = "SKIP_DOWN"
 zones = zone_combinations(days, 1, 1)
 for zone in zones:
     set_simple_schedule(municipality, service, date, last_date, total_weeks, holidays, zone, shift, cur)
+    db.commit()
 
 #Washington, DC
 municipality = "DC"
@@ -41,12 +43,14 @@ shift = "DOWN"
 zones = zone_combinations(days, 1, 2)
 for zone in zones:
     set_simple_schedule(municipality, service, date, last_date, total_weeks, holidays, zone, shift, cur)
+    db.commit()
 
 service = "RECYCLE"
 shift = "DOWN"
 zones = zone_combinations(days, 1, 1)
 for zone in zones:
     set_simple_schedule(municipality, service, date, last_date, total_weeks, holidays, zone, shift, cur)
+    db.commit()
 
 #Philadelphia test version
 municipality = "PHILADELPHIA"
@@ -61,15 +65,12 @@ shift = "DOWN"
 zones = zone_combinations(days, 1, 1)
 for zone in zones:
     set_simple_schedule(municipality, service, date, last_date, total_weeks, holidays, zone, shift, cur)
+    db.commit()
 
 service = "RECYCLE"
 shift = "DOWN"
 zones = zone_combinations(days, 1, 1)
 for zone in zones:
     set_simple_schedule(municipality, service, date, last_date, total_weeks, holidays, zone, shift, cur)
-
-
-
-
-
+    db.commit()
 

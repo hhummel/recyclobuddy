@@ -1,7 +1,7 @@
 import datetime
 import MySQLdb
 
-from recycle import get_database
+from recycle import get_database_connections
 from municipalities.schedule_helpers import get_holidays, set_schedule
 
 total_weeks=3000
@@ -15,7 +15,7 @@ last_date=datetime.datetime.strptime(stop_date, "%Y-%m-%d")
 #########################################################################################################################################
 
 #Set up database
-cur=get_database()
+cur, cur_dict, db = get_database_connections()
 #########################################################################################################################################
 #Lower Merion:  Warning!  Don't rerun program without clearing database or there will be redundant entries
 #########################################################################################################################################
@@ -32,16 +32,19 @@ zone_days=[1, 2, 3, 4]
 service="RECYCLE"
 period=2
 set_schedule(municipality, service, period, date, last_date, total_weeks, holidays, "LM", normal_days, zone_days, cur)
+db.commit()
 
 #Find trash schedule, (period=1)
 service="TRASH"
 period=1
 set_schedule(municipality, service, period, date, last_date, total_weeks, holidays, "LM", normal_days, zone_days, cur)
+db.commit()
 
 #Find yard schedule, (period=1)
 service="YARD"
 period=1
 set_schedule(municipality, service, period, date, last_date, total_weeks, holidays, "LM", normal_days, zone_days, cur)
+db.commit()
 
 #########################################################################################################################################
 #Philadelphia:  Warning!  Don't rerun program without clearing database or there will be redundant entries
@@ -59,13 +62,16 @@ zone_days=[1, 2, 3, 4, 5]
 service="RECYCLE"
 period=1
 set_schedule(municipality, service, period, date, last_date, total_weeks, holidays, "DOWN", normal_days, zone_days, cur)
+db.commit()
 
 #Find recycling schedule, (period=1)
 service="TRASH"
 period=1
 set_schedule(municipality, service, period, date, last_date, total_weeks, holidays, "DOWN", normal_days, zone_days, cur)
+db.commit()
 
 #Find recycling schedule, (period=1)
 service="YARD"
 period=1
 set_schedule(municipality, service, period, date, last_date, total_weeks, holidays, "DOWN", normal_days, zone_days, cur)
+db.commit()
