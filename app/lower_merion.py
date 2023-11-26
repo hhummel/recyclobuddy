@@ -13,7 +13,7 @@ from municipalities import schedule_helpers
 
 logger = logging.getLogger(__name__)
 
-def get_zone_items(address) -> list(dict):
+def get_zone_items(address) -> list[dict]:
     """Get tokaen and then zone information from matching addresses from LM API"""
     token_url = "https://www.lowermerion.org/Home/GetToken"
     token_headers = {
@@ -77,7 +77,7 @@ def get_zone_from_items(items, address, zip):
     ) for match_element in match_elements]
 
 
-def get_zone(address, zip) -> list(ZoneItem):
+def get_zone(address, zip) -> list[ZoneItem]:
     """Get a list of ZoneItems, log if none found or multiple items are found"""
     items = get_zone_items(address)
     if not items:
@@ -184,6 +184,3 @@ def set_schedule(municipality, service, period, date, last_date, total_weeks, ho
         
                 #Insert record into app_schedule table
                 schedule_helpers.set_record(cur, municipality, service, date.strftime("%Y-%m-%d"), zone_str, raw_number, this_week, next_day.strftime("%Y-%m-%d"), str(days_to_pickup))
-
-
-
