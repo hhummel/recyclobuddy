@@ -2,97 +2,98 @@
 ################################################################################################################################################################################
 #   Zone and day LM specific
 ################################################################################################################################################################################
-import mechanize
-import re
+
+from dataclasses import dataclass
 import datetime
-import MySQLdb
-from address import AddressParser, address
+import json
+import logging
+import requests
 
-import schedule_helpers
+from municipalities import schedule_helpers
 
-#Lower Merion subroutines
+logger = logging.getLogger(__name__)
 
-#Find LM recycling day and zone
-def get_recycling_zone(address, zip):
-    #Make cookie jar.  See wwwsearch.sourceforge.dat/mechanize/hints.html
-    cj=mechanize.LWPCookieJar()
-    opener=mechanize.build_opener(mechanize.HTTPCookieProcessor(cj))
-    mechanize.install_opener(opener)
-
-    #Save cookies
-    cj.save("/usr/local/django/recyclocity/recyclocity_static/cookies/cookie_jar", ignore_discard=True, ignore_expires=True)
-
-    #Create a browser
-    browser=mechanize.Browser()
-
-    #Fill in form
-    browser.open('http://lmt-web.lowermerion.org/cgi-bin/recycle2.plx')
-    browser.form = list(browser.forms())[0]
-    browser.form['askrecycle'] = address
-    browser.form['postcode'] = zip
-
-    #Submit form
-    browser.submit()
-
-    #Extract content
-    content = browser.response().read()
-
-    #Use pattern match to extract fields
-    m=re.search('every other <b> (Monday|Tuesday|Wednesday|Thursday|Friday)</b>.+Zone ([AB][1-4])', content)
-
-    if m:
-        day, zone=m.groups()
-        #Convert day to number
-        day_number = schedule_helpers.get_day_number(day)
-        return day_number, zone
-    else:
-        #Failed to match a vaild address and zip combination in Lower Merion.
+def get_zone_items(address) -> list(dict):
+    """Get tokaen and then zone information from matching addresses from LM API"""
+    token_url = "https://www.lowermerion.org/Home/GetToken"
+    token_headers = {
+        "Accept": "application/json",
+        "User-Agent": "recyclobuddy",
+        "Content-Type": "application/json",
+    }
+    x = requests.post(token_url, headers=token_headers)
+    if x.status_code != 200:
+        logger.error("Failed to get LM token")
+        return
+    response_dict = json.loads(x.text)
+    token = response_dict.get("Token")
+    
+    search_url = "https://flex.visioninternet.com/api/FeFlexComponent/Get"
+    search_headers = {
+        "Accept": "application/json",
+        "User-Agent": "recyclobuddy",
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
+    payload = {"pageSize":20,"pageNumber":1,"sortOptions":[],"searchText": address,"searchFields":["Address"],"searchOperator":"OR","searchSeparator":",","Data":{"componentGuid":"f05e2a62-e807-4f30-b450-c2c48770ba5c","listUniqueName":"VHWQOE27X21B7R8"},"filterOptions":[]}
+    y = requests.post(search_url, headers=search_headers, json=payload)
+    if y.status_code != 200:
         return
 
-#Find LM trash day and zone
+    y_dict = json.loads(y.text)
+    records = y_dict.get("records")
+    if not records:
+        return
+    items = records.get("items")
+    return items
+
+
+@dataclass
+class ZoneItem:
+    """Class for relevant itms returned from LM address search"""
+    collection_day: int
+    holiday_zone: str
+    address: str
+
+
+def get_zone_from_items(items, address, zip):
+    """Attempt to match zip as well as address. Return a list of zone information and addresses"""
+    zip_string = f"({zip})"
+
+    match_address = [item for item in items if address in item.get("Address")]
+    match_zip = [item for item in match_address if zip_string in item.get("Address")]
+
+    if match_zip:
+        match_elements = match_zip
+    elif match_address:
+        match_elements = match_address
+    else:
+        return []
+
+    return [ZoneItem(
+        collection_day=schedule_helpers.get_day_number(match_element.get("Collection")), 
+        holiday_zone=match_element.get("HolZone"),
+        address=match_element.get("Address")
+    ) for match_element in match_elements]
+
+
+def get_zone(address, zip) -> list(ZoneItem):
+    """Get a list of ZoneItems, log if none found or multiple items are found"""
+    items = get_zone_items(address)
+    if not items:
+        logger.warning(f"Failed to locate LM zone information for address: {address} and zip: {zip}")
+    if len(items) > 1:
+        logger.error(f"Returned multiple zones for address: {address}. Should be unique: {items}")
+    return get_zone_from_items(items, address, zip)
+
 def get_trash_zone(address, zip):
-    #Make cookie jar.  See wwwsearch.sourceforge.dat/mechanize/hints.html
-    cj=mechanize.LWPCookieJar()
-    opener=mechanize.build_opener(mechanize.HTTPCookieProcessor(cj))
-    mechanize.install_opener(opener)
+    """Return tuple of collection_day and holiday zone"""
+    zone_items = get_zone(address, zip)
+    if not zone_items or len(zone_items) != 1:
+        return None
+    zone_item = zone_items[0]
+    return zone_item.collection_day, zone_item.holiday_zone
 
-    #Save cookies
-    cj.save("/usr/local/django/recyclocity/recyclocity_static/cookies/cookie_jar", ignore_discard=True, ignore_expires=True)
-
-    #Create a browser
-    browser=mechanize.Browser()
-
-    #Fill in form
-    browser.open('http://lmt-web.lowermerion.org/cgi-bin/refuse2.plx')
-    browser.form = list(browser.forms())[0]
-    browser.form['askrecycle'] = address
-    browser.form['postcode'] = zip
-
-    #Submit form
-    browser.submit()
-
-    #Extract content
-    content = browser.response().read()
-
-    #Use pattern match to extract fields
-    m=re.search('<b>(Monday|Tuesday|Wednesday|Thursday|Friday)</b>', content)
-    if m:
-        day, =m.groups()
-        #Convert day to number
-        day_number = schedule_helpers.get_day_number(day)
-    else:
-        #Failed
-        return
-
-    m=re.search('<b>Zone ([1-4])</b>', content)
-    if m:
-        zone,=m.groups()
-    else:
-        #Failed
-        return
-        
-    #Match for both day and zone        
-    return day_number, zone
 
 ################################################################################################################################################################################
 #   Schedule LM specific
@@ -143,12 +144,12 @@ def set_schedule(municipality, service, period, date, last_date, total_weeks, ho
                 #If period is 2, is this an on week or off week?
                 if week_label != letter:
                     #Not a recycling week, so find recycle day next week.  Only occurs if period=2.
-                    recycle_day = get_day(next_week, number, shift)
+                    recycle_day = schedule_helpers.get_day(next_week, number, shift)
                     days_ahead = 7 + recycle_day -1
                     
                 else:
                     #It is a recycling week.
-                    recycle_day = get_day(this_week, number, shift)
+                    recycle_day = schedule_helpers.get_day(this_week, number, shift)
 
                     #Is the day past?
                     if day<=recycle_day:
@@ -157,11 +158,11 @@ def set_schedule(municipality, service, period, date, last_date, total_weeks, ho
                     else:
                         if period==2:
                             #Day past, so find day 2 weeks ahead
-                            recycle_day = get_day(following_week, number, shift)
+                            recycle_day = schedule_helpers.get_day(following_week, number, shift)
                             days_ahead = 14 + recycle_day -1
                         elif period==1:
                             #Day past, so find day 1 week ahead
-                            recycle_day = get_day(next_week, number, shift)
+                            recycle_day = schedule_helpers.get_day(next_week, number, shift)
                             days_ahead = 7 + recycle_day -1
                         else:
                             exit("Error, period must be 1 or 2")
